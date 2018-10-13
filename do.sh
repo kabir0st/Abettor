@@ -38,7 +38,8 @@ if [ -n "$1" ]; then
 	    echo ''
             git push
 	    echo ''
-            read -p "Pushed"
+            echo "Pushed"
+            echo ''
         else
             echo "Commit msg missing .. Use git "commit_msg""
        fi
