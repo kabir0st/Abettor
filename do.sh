@@ -32,7 +32,7 @@ if [ -n "$1" ]; then
         echo ''	
         if [ -n "$2" ]; then
 	    echo ''
-            git commit -m $2
+            git commit -m "$2"
 	    echo ''
             read -p "Commited"
 	    echo ''
@@ -40,8 +40,11 @@ if [ -n "$1" ]; then
 	    echo ''
             read -p "Pushed"
         else
-            echo "Commit msg missing .. Use git commit_msg"
-            fi
+            echo "Commit msg missing .. Use git "commit_msg""
+       fi
+    elif [ $1 == 'test' ]; then
+        echo "You are in testing mode"
+        echo $2
     fi
 else
     echo ''
@@ -52,5 +55,5 @@ else
     echo 'mig  - migrate'
     echo 'fmig - makemigrations then migrate'
     echo 'cmig - makemigrations only'
-    echo 'git  - for syning to github.. Use git commit_msg'
+    echo 'git  - for syning to github.. Use git "commit_msg"'
 fi
