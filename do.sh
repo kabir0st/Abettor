@@ -4,14 +4,16 @@ if [ -n "$1" ]; then
     elif [ $1 == 'app' ]; then
         if [ -n "$2" ]; then
             echo "Creting '$2' app"
-            python3 manage.py createapp $2
+            python3 manage.py startapp $2
             echo 'Done'
             else
             echo "Please give a app name"
         fi
     elif [ $1 == 'mig' ]; then
         echo 'Doing Migrations'
+	echo ''
         python3 manage.py migrate
+	echo ''
     elif [ $1 == 'fmig' ]; then
         echo 'doing full migration'
         python3 manage.py makemigrations
@@ -21,13 +23,21 @@ if [ -n "$1" ]; then
         python3 manage.py makemigrations
     elif [ $1 == 'git' ]; then
         echo 'Syning recent channges into github. Make SURE you tested the changes.'
-        git status 
+        echo ''
+	git status
+        echo ''	
         read -p "PAK to add everything and commit"
-        git add . 
+        echo ''
+	git add .
+        echo ''	
         if [ -n "$2" ]; then
+	    echo ''
             git commit -m $2
+	    echo ''
             read -p "Commited"
+	    echo ''
             git push
+	    echo ''
             read -p "Pushed"
         else
             echo "Commit msg missing .. Use git commit_msg"
