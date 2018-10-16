@@ -1,21 +1,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import StudentRegistrationForm
-
+from .forms import UserForm , StudentForm
+from .models import Semester
 # Create your views here.
 
 def student_signup(request):
     if request.method == 'POST':
-        student_form = StudentRegistrationForm(request.POST)
-        if student_form.is_valid():
+        user_form = UserForm(request.POST)
+        student_form = StudentForm(request.POST)
+
+        if student_form.is_valid() and user_form.is_valid():
             print('Given Data is valid')
-            pass
+            user = user_form.save(commit=False)
+            user.save()
+            student_form.save()
+            
+            return HttpResponse('Good')
         else:
             print('bad oone')
             return HttpResponseRedirect('login')
     else:
-        student_form =  StudentRegistrationForm()
-        return render(request, 'account/student_form.html', {'form':student_form})
+        user_form = UserForm()
+        student_form =  StudentForm(initial= {'current_semester': Semester.objects.get(semester = 1)})
+        return render(request, 'account/student_form.html', { 'user_form':user_form, 'student_form':student_form})
 
 def login(request):
     if request.method == 'POST':
