@@ -29,6 +29,7 @@ class UserForm(UserCreationForm,ModelForm):
 
 class StudentForm(ModelForm):
     current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
+    dob = forms.DateField(widget = SelectDateWidget(empty_label = "Nothing"))
     class Meta:
         model = Student
         fields = ['current_semester','phone_number']

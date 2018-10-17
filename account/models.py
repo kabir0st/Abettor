@@ -27,7 +27,7 @@ class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     phone_number = models.IntegerField(blank= True)
-    #dob = models.DateField(blank = True)
+    dob = models.DateField(blank = True)
 
     # def __str__(self):
     #     return self.user.first_name + self.user.last_name
