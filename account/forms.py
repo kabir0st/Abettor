@@ -21,15 +21,17 @@ from .models import Student, CustomUser, Subject, Semester
 #         return user
 
 class UserForm(UserCreationForm,ModelForm):
+    username = forms.CharField(min_length=3, max_length=30)
     email = forms.EmailField(required = True)
 
     class Meta(UserCreationForm):
         model = CustomUser
         fields = ['first_name','last_name','email','username','password1','password2']
 
+
 class StudentForm(ModelForm):
     current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
-    dob = forms.DateField(widget = SelectDateWidget(empty_label = "Nothing"))
+    dob = forms.DateField()
     class Meta:
         model = Student
         fields = ['current_semester','phone_number']

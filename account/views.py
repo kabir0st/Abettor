@@ -8,7 +8,7 @@ def student_signup(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         student_form = StudentForm(request.POST)
-
+        print(student_form['phone_number'])
         if student_form.is_valid() and user_form.is_valid():
             print('Given Data is valid')
             user = user_form.save(commit=False)
