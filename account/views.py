@@ -12,8 +12,9 @@ def student_signup(request):
         if student_form.is_valid() and user_form.is_valid():
             print('Given Data is valid')
             user = user_form.save(commit=False)
-            user.save()
-            student_form.save()
+            print(user.username)
+            # user.save()
+            # student_form.save()
             
             return HttpResponse('Good')
         else:

@@ -29,7 +29,7 @@ class Student(models.Model):
     REQUIRED_FIELDS = ('user',)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    phone_number = models.IntegerField(blank= True)
+    phone_number = models.CharField(max_length = 15)
     dob = models.DateField(default = datetime.date.today)
 
     # def __str__(self):

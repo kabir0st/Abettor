@@ -3,23 +3,29 @@
 {% block content %}
 {% load staticfiles %}
 {{ form.media }}
-
-<script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
-<script type="text/javascript" src="/jsi18n/"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
-<div class="container">
-    <h1 class="jumbotron">Login Form</h1>
-    <form action= "new" method = "POST"> 
-        {% csrf_token %}
-        {{ user_form.as_p }}
 
-        {{ student_form.as_p }}
-        <input type = 'submit' value="Submit">
-    </form>
-</div>
-{% endblock %}
+<div class="container">
+    <div class="row justify-content-center align-items-center panel">
+      <div class="col" style="max-width: 500px">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+              <h1 class="h2">Register New Student</h1>
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              {{ user_form.as_p }}
+              {{ student_form.as_p }}
+              <button type="submit" class="btn btn-primary">Regsiter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    {% endblock %}
