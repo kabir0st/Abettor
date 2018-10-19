@@ -1,11 +1,14 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import datetime
 
 class CustomUser(AbstractUser):
     is_student = models.BooleanField(default=True)
     is_teacher = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
+    registered_on = models.DateTimeField (default = datetime.datetime.now)
+
 
 class Subject(models.Model):
     subject_name = models.CharField(unique = True, max_length = 100)
@@ -27,10 +30,10 @@ class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     phone_number = models.IntegerField(blank= True)
-    dob = models.DateField(blank = True)
+    dob = models.DateField(default = datetime.date.today)
 
     # def __str__(self):
-    #     return self.user.first_name + self.user.last_name
+    #     return self.user.first_name
 
 
 

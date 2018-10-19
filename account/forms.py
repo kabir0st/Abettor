@@ -3,6 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms import ModelForm
 from .models import Student, CustomUser, Subject, Semester
+from django.contrib.admin.widgets import AdminDateWidget
+import datetime
+
 
 # class StudentRegistrationForm(UserCreationForm):
 #     current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
@@ -31,7 +34,11 @@ class UserForm(UserCreationForm,ModelForm):
 
 class StudentForm(ModelForm):
     current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
-    dob = forms.DateField()
+    
     class Meta:
         model = Student
-        fields = ['current_semester','phone_number']
+        fields = ['current_semester','phone_number','dob']
+        widgets = {
+            'dob': AdminDateWidget(),
+        }
+
