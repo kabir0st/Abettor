@@ -41,3 +41,11 @@ class StudentForm(ModelForm):
         model = Student
         fields = ['current_semester','phone_number','dob']
 
+class LoginForm(forms.Form):
+    username = forms.CharField(required = True)
+    password = forms.CharField(widget = forms.PasswordInput)
+
+    class Meta:
+        fields = ['username','password']
+
+
