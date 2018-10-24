@@ -24,14 +24,19 @@
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
               </li>
-
-              <li class="nav-item">
-                {% if user.is_authenticated %}
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="/dashboard">Dashbord</a>
+                </li>  
+                <li class="nav-item">
                   <a class="nav-link" href="/user/logout">Log Out</a>
+                </li>
                 {% else %}
+                <li class="nav-item">
                   <a class="nav-link" href="/user/login">Log In</a>
-                  {% endif %}
-              </li>
+                </li>
+                {% endif %}
+              
             </ul>
           </div>
         </div>
