@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'payment',
     'dashboard',
     'user',
     'bootstrap4',
@@ -126,3 +127,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 LOGIN_REDIRECT_URL = '/dashboard'
+
+#For Custom User Model 
+AUTH_USER_MODEL = 'user.CustomUser'

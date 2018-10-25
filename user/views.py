@@ -1,10 +1,30 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import sweetify
+from .forms import UserForm , StudentForm, LoginForm
+from .models import Semester
+
+@login_required
+def registration(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        student_form = StudentForm(request.POST)
+        if student_form.is_valid() and user_form.is_valid():
+            user = user_form.save(commit=False)
+            user.save()
+            student_form.save()
+            sweetify.sweetalert(request,'StudentRegistered', text = 'New Student Had Been Added.')
+            return HttpResponseRedirect('/user/new')
+        else:
+            sweetify.sweetalert(request,'No', text = 'One Of the box are invalid. Please Check and Try Again')
+            return HttpResponseRedirect('/user/new')
+    else:
+        user_form = UserForm()
+        student_form =  StudentForm(initial= {'current_semester': Semester.objects.get(semester = 1)})
+        return render(request, 'user/student_form.html', { 'user_form':user_form, 'student_form':student_form})
 
 
 def user_login(request):
@@ -30,3 +50,4 @@ def user_logout(request):
     logout(request)
     sweetify.sweetalert(request,'LogedOut', text = 'You Have Successfully loged Out.')
     return HttpResponseRedirect('/')
+

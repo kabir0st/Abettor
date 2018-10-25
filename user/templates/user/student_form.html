@@ -1,0 +1,24 @@
+
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center panel">
+      <div class="col" style="max-width: 500px">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+              <h1 class="h2">Register New Student</h1>
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              {{ user_form.as_p }}
+              {{ student_form.as_p }}
+              <button type="submit" class="btn btn-primary">Regsiter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    {% endblock %}
