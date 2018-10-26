@@ -7,7 +7,6 @@ class CustomUser(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
-    registered_on = models.DateTimeField (default = datetime.datetime.now)
 
 
 class Subject(models.Model):
@@ -23,17 +22,29 @@ class Semester(models.Model):
     subjects = models.ManyToManyField(Subject,blank = True)
 
     def __str__(self):
-        return str(self.semester)   
+        return str(self.semester) 
+
+
+class FeeTable(models.Model):
+    REQUIRED_FIELDS = ('user',)
+    student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True, unique = True)
+    credit = models.PositiveIntegerField(default = 0)
+    dues = models.PositiveIntegerField(default = 0)
+    paid_sem = models.PositiveIntegerField(default = 0)
+    
 
 class Student(models.Model):
     REQUIRED_FIELDS = ('user',)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
-    current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    # Normal Profile Data
     phone_number = models.CharField(max_length = 15)
     dob = models.DateField(default = datetime.date.today)
-
-    # def __str__(self):
-    #     return self.user.first_name
+    registered_on = models.DateTimeField (default = datetime.datetime.now)
+    # Reference Data
+    current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.user.username
 
 
 
