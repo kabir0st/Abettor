@@ -75,7 +75,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/payment/">
               <i class="ni ni-money-coins text-green"></i> Billing
             </a>
           </li>
@@ -164,14 +164,15 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
-          <!-- Main stats -->
-          {% block content %}
-
-          {% endblock %}
+          
         </div>
-      </div>
+        </div>
     </div>
     <!-- Page content -->
+                     {% block content %}
+                     
+                     {% endblock %}
+                     
       <!-- Footer -->
       <footer class="page-footer fixed-bottom">
         <div class="row align-items-center justify-content-xl-between">
