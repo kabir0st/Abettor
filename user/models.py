@@ -26,12 +26,11 @@ class Semester(models.Model):
 
 
 class FeeTable(models.Model):
-    REQUIRED_FIELDS = ('user',)
-    student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True, unique = True)
+    REQUIRED_FIELDS = ('student',)
+    student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True)
     credit = models.PositiveIntegerField(default = 0)
     dues = models.PositiveIntegerField(default = 0)
     paid_sem = models.PositiveIntegerField(default = 0)
-    
 
 class Student(models.Model):
     REQUIRED_FIELDS = ('user',)
@@ -42,10 +41,6 @@ class Student(models.Model):
     registered_on = models.DateTimeField (default = datetime.datetime.now)
     # Reference Data
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.user.username
-
 
 
 class Teacher (models.Model):

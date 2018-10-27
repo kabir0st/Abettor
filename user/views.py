@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import sweetify
 from .forms import UserForm , StudentForm, LoginForm
-from .models import Semester
+from .models import Semester, FeeTable
 
 @login_required
 def registration(request):
@@ -15,7 +15,10 @@ def registration(request):
         if student_form.is_valid() and user_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
-            student_form.save()
+            student = student_form.save(commit=False)
+            student.save()
+            fee_table = FeeTable.objects.create(student =  student)
+            fee_table.save()
             sweetify.sweetalert(request,'StudentRegistered', text = 'New Student Had Been Added.')
             return HttpResponseRedirect('/user/new')
         else:
