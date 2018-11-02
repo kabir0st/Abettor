@@ -12,18 +12,25 @@ def registration(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         student_form = StudentForm(request.POST)
+        print(user_form)
+        print(student_form)
+        print()
+        print()
+        print(user_form.is_valid())
+        print(student_form.is_valid())
+        
         if student_form.is_valid() and user_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
+            print(user)
             student = student_form.save(commit=False)
+            student.user = user
             student.save()
             fee_table = FeeTable.objects.create(student =  student)
             fee_table.save()
-            sweetify.sweetalert(request,'StudentRegistered', text = 'New Student Had Been Added.')
             return HttpResponseRedirect('/user/new')
         else:
-            sweetify.sweetalert(request,'No', text = 'One Of the box are invalid. Please Check and Try Again')
-            return HttpResponseRedirect('/user/new')
+            return HttpResponse('Error On Form')
     else:
         user_form = UserForm()
         student_form =  StudentForm(initial= {'current_semester': Semester.objects.get(semester = 1)})
