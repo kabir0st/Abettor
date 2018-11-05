@@ -12,13 +12,6 @@ def registration(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         student_form = StudentForm(request.POST)
-        print(user_form)
-        print(student_form)
-        print()
-        print()
-        print(user_form.is_valid())
-        print(student_form.is_valid())
-        
         if student_form.is_valid() and user_form.is_valid():
             user = user_form.save(commit=False)
             user.save()

@@ -141,38 +141,11 @@
     </div>
   </nav>
 
+
+  {% block content %}
   
-  <!-- Main content -->
-  <div class="main-content">
-    <!-- Top navbar -->
-    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-      <div class="container-fluid">
-        <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none mb-0 d-md-flex ml-lg-auto">
-          <div class="form-group mb-0">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" placeholder="Student's Name" type="text">
-            </div>
-          </div>
-        </form>
-      </div>
-    </nav>
-    <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-      <div class="container-fluid">
-        <div class="header-body">
-          
-        </div>
-        </div>
-    </div>
-    <!-- Page content -->
-                     {% block content %}
-                     
-                     {% endblock %}
-                     
+  {% endblock %}
+  
       <!-- Footer -->
       <footer class="page-footer fixed-bottom">
         <div class="row align-items-center justify-content-xl-between">
