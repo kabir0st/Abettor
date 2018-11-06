@@ -21,9 +21,10 @@ def registration(request):
             student.save()
             fee_table = FeeTable.objects.create(student =  student)
             fee_table.save()
-            return HttpResponseRedirect('/user/new')
+            return HttpResponseRedirect('/dashboard')
         else:
-            return HttpResponse('Error On Form')
+            messages.error(request,"Some Error On the Form.")
+            return HttpResponse(request,'user/student_form.html')
     else:
         user_form = UserForm()
         student_form =  StudentForm(initial= {'current_semester': Semester.objects.get(semester = 1)})
