@@ -8,6 +8,9 @@ class CustomUser(AbstractUser):
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
 
+    def __str__(self):
+        return self.first_name + self.last_name
+
 
 class Subject(models.Model):
     subject_name = models.CharField(unique = True, max_length = 100)

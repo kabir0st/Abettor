@@ -2,6 +2,68 @@
 
 {% block content %}
 <div class="main-content">
-  
+        <div>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" required autofocus>
+        </div>
+        <div>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" required autofocus>
+        </div>
+        <div>
+            <button type="button" onclick="search()">Search</button>
+        </div>
+        <div class="container"><p id=username></p></div>
+
+        <div class="container"><p id=name></p></div>
+        <div class="container"><p id=sem></p></div>
 </div>
+
+<script>
+    function search(){
+        var xhttp = new XMLHttpRequest();
+        var first_name = $('#first_name').val();
+        var last_name = $('#last_name').val();
+        var info = {
+            'first_name': first_name,
+            'last_name': last_name,
+        };
+        $.ajax ({
+            type: 'POST',
+            url: 'search',
+            data: JSON.stringify(info),
+            success: function(data){
+                console.log(data)
+                $(".username").append("hero")
+        }
+        });
+
+    function outputData(data){
+        var x;
+        var c = 0;
+        for (x in data['username']){
+            $(".username").append(x);
+            $(".name").append(data['name'][c]);
+            $(".name").append(data['semester'][c]);
+            console.log(data['name'][c]);
+            c = c + 1;
+        }
+    }
+}
+
+</script>
 {% endblock %}
+
+jQuery.ajax(
+    {
+        'type': 'POST',
+        'url': url,
+        'contentType': 'application/json',
+        'data': {
+            'content': 'xxx',
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        'dataType': 'json',
+        'success': rateReviewResult 
+    }
+);
