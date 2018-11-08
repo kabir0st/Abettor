@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import json
-from user.models import CustomUser, FeeTable,Student
+from user.models import CustomUser, FeeTable,Student,Semester
 from django.http import HttpResponse, HttpResponseRedirect
 
 
@@ -27,4 +27,47 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
-    
+def get_info(request,username):
+    user = CustomUser.objects.get(username = username)
+    student = Student.objects.get(user = user)
+    feetable = FeeTable.objects.get(student = student)
+    paid_till_now  = feetable.paid_till_now
+    whole_fee = 0
+    all_sem = Semester.objects.all()
+    for x in all_sem:
+        whole_fee = whole_fee + x.fee
+        if( x  == student.current_semester):
+            break
+    temp = whole_fee - paid_till_now
+    dues = 0
+    credit = 0
+    if (temp > 0 ):
+        dues = temp
+    else: 
+        credit = -temp
+    print(whole_fee)
+    response_json = {
+        'username': username,
+        'name': user.first_name + " " + user.last_name,
+        'current_semester': str(student.current_semester),
+        'dues':dues,
+        'credit':credit,
+    }
+    return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+
+def pay(request):
+    if request.method == "POST":
+        json_str =  request.body.decode(encoding = 'UTF-8')
+        json_obj = json.loads(json_str)
+        username = json_obj['username']
+        amount = json_obj['amount']
+        x = Student.objects.get(username = username)
+        feetable = FeeTable.objects.get(x)
+        feetable.paid_till_now = feetable.paid_till_now + amount
+        feetable.save()
+        return get_info(request,username)
+    else:
+        return get_info(request,username)
+
+
+        

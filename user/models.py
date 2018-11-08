@@ -31,10 +31,8 @@ class Semester(models.Model):
 class FeeTable(models.Model):
     REQUIRED_FIELDS = ('student',)
     student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True)
-    credit = models.PositiveIntegerField(default = 0)
-    dues = models.PositiveIntegerField(default = 0)
-    paid_sem = models.PositiveIntegerField(default = 0)
-
+    paid_till_now = models.PositiveIntegerField(default = 0)
+    
 class Student(models.Model):
     REQUIRED_FIELDS = ('user',)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
