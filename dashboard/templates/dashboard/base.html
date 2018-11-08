@@ -18,6 +18,8 @@
   <!-- Argon CSS -->
   <link type="text/css" href="{% static 'assets/css/argon.css' %}" rel="stylesheet">
   <!-- For CSRF Token -->
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 
 </head>
 
@@ -143,11 +145,14 @@
     </div>
   </nav>
 
+  <div class="main-content">
 
   {% block content %}
   
   {% endblock %}
-  
+
+</div>
+      
       <!-- Footer -->
       <footer class="page-footer fixed-bottom">
         <div class="row align-items-center justify-content-xl-between">
@@ -165,8 +170,8 @@
           </div>
         </div>
       </footer>
-    </div>
-  </div>
+
+  
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
@@ -176,6 +181,7 @@
   <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
   <!-- Argon JS -->
   <script src="{% static 'assets/js/argon.js' %}"></script>
+  <!--For Jquery-->
   {% load sweetify %}
   {% sweetify %}
 </body>

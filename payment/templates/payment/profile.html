@@ -1,54 +1,68 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<div class="main-content">
-        <div>
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" required autofocus>
-        </div>
-        <div>
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" required autofocus>
-        </div>
-        <div>
-            <button type="button" onclick="search()">Search</button>
-        </div>
-        <div class="container"><p id=username></p></div>
 
-        <div class="container"><p id=name></p></div>
-        <div class="container"><p id=sem></p></div>
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header border-0">
+            <h3 class="mb-0">Fee Table</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush table-hover">
+                <tr>
+                <th scope="col">Name :</th>
+                <th scope="col">{{ name }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Current Semester :</th>
+                <th scope="col">{{ current_semester }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Remaining Fee :</th>
+                <th scope="col">Rs. {{ dues }} /-</th>
+                </tr>
+                <tr>
+                <th scope="col">Credits :</th>
+                <th scope="col">Rs. {{ credits }} /-</th>
+                </tr>
+                <tr>
+                <th scope="col">Username :</th>
+                <th scope="col">{{ username }}</th>
+                </tr>
+
+                <tr>
+                <th scope="col">Amount :</th>
+                <th scope="col"><input type="number" class="form-control" autofocus id="amount"><button type="button" class="btn btn-success" onclick="pay()">PAY</button></th>
+                </tr>
+        </div>
+    </div>
 </div>
 
+<style>
+    .table-row{
+    cursor:pointer;
+    }
+    .main-content {
+    margin-top: 5%;
+    }
+</style>
+          
 <script>
-    function search(){
+        function pay(){
+        var  username = '{{ username }}';
         var xhttp = new XMLHttpRequest();
-        var first_name = $('#first_name').val();
-        var last_name = $('#last_name').val();
+        var amount = $('#amount').val();
         var info = {
-            'first_name': first_name,
-            'last_name': last_name,
+            'username': username,
+            'amount': amount,
         };
         $.ajax ({
             type: 'POST',
-            url: 'search',
+            url: "'{{ username }}'/pay",
             data: JSON.stringify(info),
-            success: function(data){
-                console.log(data)
-                $(".username").append("hero")
-        }
+            success: location.reload(),    
         });
-
-    function outputData(data){
-        var x;
-        var c = 0;
-        for (x in data['username']){
-            $(".username").append(x);
-            $(".name").append(data['name'][c]);
-            $(".name").append(data['semester'][c]);
-            console.log(data['name'][c]);
-            c = c + 1;
         }
-    }
-}
-
+        
 </script>
+{% endblock %}

@@ -45,29 +45,29 @@ def get_info(request,username):
         dues = temp
     else: 
         credit = -temp
-    print(whole_fee)
-    response_json = {
+    data = {
         'username': username,
         'name': user.first_name + " " + user.last_name,
         'current_semester': str(student.current_semester),
         'dues':dues,
-        'credit':credit,
+        'credits':credit,
     }
-    return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+    return render(request,'payment/profile.html',data)
 
-def pay(request):
+def pay(request,username):
     if request.method == "POST":
         json_str =  request.body.decode(encoding = 'UTF-8')
         json_obj = json.loads(json_str)
         username = json_obj['username']
         amount = json_obj['amount']
-        x = Student.objects.get(username = username)
-        feetable = FeeTable.objects.get(x)
-        feetable.paid_till_now = feetable.paid_till_now + amount
+        user = CustomUser.objects.get(username = username)
+        x = Student.objects.get(user = user)
+        feetable = FeeTable.objects.get(student = x)
+        feetable.paid_till_now = int(feetable.paid_till_now) + int(amount)
         feetable.save()
-        return get_info(request,username)
+        return HttpResponseRedirect('/payment/'+username)
     else:
-        return get_info(request,username)
+        return HttpResponseRedirect('/')
 
 
         
