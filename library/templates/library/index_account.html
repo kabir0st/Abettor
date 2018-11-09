@@ -1,6 +1,72 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-
-<h1> is for accountant </h1>
+<div class="container">
+        <label for="book_name">Search Book:</label>
+        <input type="text" id="book_name" required autofocus placeholder="book name">
+        
+        <button type="button" class="btn btn-primary" onclick="search()">Search</button>
+    <hr>
+    <h1 class="jumbotron text-center">Registered Books</h1>
+    <hr>
+    <div id="main-table" class="table-responsive">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Books</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Availbe Units</th>
+                        <th scope="col">Assigned Units</th>
+                        <th scope="col">Assigned Units</th>
+                        </tr>
+                    <tbody id="results">
+                    </tbody>
+                </div>
+            </div>
+</div>
+</div>
+<script>
+    function search(){
+    var xhttp = new XMLHttpRequest();
+    var book_name = $('#book_name').val();
+    var info = {
+        'book_name': book_name,
+    };
+    $.ajax ({
+        type: 'POST',
+        url: 'search',
+        data: JSON.stringify(info),
+        success: function(data){
+            outputData(data);
+    }
+    });
+// <!-- 
+// function outputData(data){
+//     $("tr").remove(".table-row");
+//     y = data['username'].length;
+//     while (y) {
+//         y = y -1;
+//         $("#results").append(
+//                 '<tr class="table-row" data-href="'+data['username'][y]+'"><td>'+data['name'][y]+'</td><td>'+data['semester'][y]+'</td><td>'+data['username'][y]+'</td></tr>'
+//         )
+//     }
+//     $(".table-row").click(function() {
+//     window.document.location = $(this).data("href");
+//     });
+//     $("#main-table  ").show();
+// } -->
+}
+</script>
+<style>
+        .table-row{
+        cursor:pointer;
+        }
+        .main-content {
+        margin-top: 2%;
+        }
+    </style>
+    
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required,user_passes_test
+from user.models import Student
 
 def check(user):
     if user.is_accountant == True:
@@ -15,3 +15,6 @@ def index(request):
     else:
         return render(request,'library/index_student.html')
 
+
+def search (request):
+    pass

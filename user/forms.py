@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms import ModelForm
-from .models import Student, CustomUser, Subject, Semester
+from .models import Student, CustomUser, Semester
 
 
 

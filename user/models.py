@@ -11,19 +11,10 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name + self.last_name
 
-
-class Subject(models.Model):
-    subject_name = models.CharField(unique = True, max_length = 100)
-    #books = models.ManyToManyField(Book)
-
-    def __str__(self):
-        return self.subject_name
-
 class Semester(models.Model):
     fee = models.IntegerField(default= 52000)
     semester = models.PositiveIntegerField(default = 1)
-    subjects = models.ManyToManyField(Subject,blank = True)
-
+    
     def __str__(self):
         return str(self.semester) 
 
