@@ -32,11 +32,13 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'payment',
+    'library',
     'dashboard',
     'user',
+    'main',
+    #APIs
     'bootstrap4',
     'sweetify',
-    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
