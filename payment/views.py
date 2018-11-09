@@ -1,15 +1,28 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 from user.models import CustomUser, FeeTable,Student,Semester
 from django.http import HttpResponse, HttpResponseRedirect
 
 
+def check(user):
+    if user.is_accountant == True:
+        return True
+    else:
+        return False
 
 @login_required
 def index(request):
-    return render(request,'payment/index.html')
+    if request.user.is_accountant == True:
+        return render(request,'payment/index_accountant.html')
+    elif request.user.is_student == True:
+        username = request.user.username
+        data = get_info_student(username)
+        return render(request,'payment/index_student.html',data)
+    else:
+        return HttpResponse('wtf')
 
+@user_passes_test(check,login_url='/')
 def search(request):
     if request.method == "POST":
         json_str = request.body.decode(encoding='UTF-8')
@@ -27,6 +40,8 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
+
+@user_passes_test(check,login_url='/')
 def get_info(request,username):
     user = CustomUser.objects.get(username = username)
     student = Student.objects.get(user = user)
@@ -54,6 +69,8 @@ def get_info(request,username):
     }
     return render(request,'payment/profile.html',data)
 
+
+@user_passes_test(check,login_url='/')
 def pay(request,username):
     if request.method == "POST":
         json_str =  request.body.decode(encoding = 'UTF-8')
@@ -69,5 +86,29 @@ def pay(request,username):
     else:
         return HttpResponseRedirect('/')
 
-
-        
+def get_info_student(username):
+    user = CustomUser.objects.get(username = username)
+    student = Student.objects.get(user = user)
+    feetable = FeeTable.objects.get(student = student)
+    paid_till_now  = feetable.paid_till_now
+    whole_fee = 0
+    all_sem = Semester.objects.all()
+    for x in all_sem:
+        whole_fee = whole_fee + x.fee
+        if( x  == student.current_semester):
+            break
+    temp = whole_fee - paid_till_now
+    dues = 0
+    credit = 0
+    if (temp > 0 ):
+        dues = temp
+    else: 
+        credit = -temp
+    data = {
+        'username': username,
+        'name': user.first_name + " " + user.last_name,
+        'current_semester': str(student.current_semester),
+        'dues':dues,
+        'credits':credit,
+    }
+    return data

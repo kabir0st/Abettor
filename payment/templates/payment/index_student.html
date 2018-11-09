@@ -1,0 +1,55 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header border-0">
+            <h3 class="mb-0">Fee Table</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush table-hover">
+                <tr>
+                <th scope="col">Name :</th>
+                <th scope="col">{{ name }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Current Semester :</th>
+                <th scope="col">{{ current_semester }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Remaining Fee :</th>
+                <th scope="col">Rs. {{ dues }} /-</th>
+                </tr>
+                <tr>
+                <th scope="col">Credits :</th>
+                <th scope="col">Rs. {{ credits }} /-</th>
+                </tr>
+                <tr>
+                <th scope="col">Username :</th>
+                <th scope="col">{{ username }}</th>
+                </tr>
+
+                <tr>
+                <th scope="col">Amount :</th>
+                <th scope="col"><input type="number" class="form-control" autofocus id="amount"><button type="button" class="btn btn-success" onclick="pay()">PAY</button></th>
+                </tr>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-row{
+    cursor:pointer;
+    }
+    .main-content {
+    margin-top: 5%;
+    }
+</style>
+          
+<script>
+        function pay(){
+            alert("Khalti Support Comming Soon")
+        };        
+</script>
+{% endblock %}

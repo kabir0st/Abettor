@@ -1,13 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 import sweetify
 from .forms import UserForm , StudentForm, LoginForm
 from .models import Semester, FeeTable
 
-@login_required
+def check(user):
+    if user.is_accountant == True:
+        return True    
+    else:
+        return False
+
+@user_passes_test(check,login_url='/dashboard')
 def registration(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
