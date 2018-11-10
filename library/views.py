@@ -22,19 +22,22 @@ def index(request):
 
 
 def search(request):
+    print('search')
     if request.method == "POST":
+        print("POST")
         json_str = request.body.decode(encoding='UTF-8')
         json_obj = json.loads(json_str)
         book_name = str(json_obj['book_name'])
-        response_json = {'assigned_to':[], 'due_date': [], 'is_assigned':[] }
+        response_json = {'assigned_to':[], 'due_date': [], 'is_assigned':[],'uuid':[]}
         books = Books.objects.filter(name = book_name)
-        for book in books:
-            for _ in range(int(book.nou_registered)):        
-                bookinstance = BookInstance.objects.get(book = book)
-                response_json['assigned_to'].append(bookinstance.assigned_to)
-                response_json['due_date'].append(bookinstance.due_date)
-                response_json['is_assigned'].append(bookinstance.is_assigned)
-                
+        for book in books:        
+                temp_book = BookInstance.objects.filter(book = book)
+                for bookinstance in temp_book:
+                    response_json['assigned_to'].append(bookinstance.assigned_to)
+                    response_json['due_date'].append(bookinstance.due_date)
+                    response_json['is_assigned'].append(bookinstance.is_assigned)
+                    response_json['uuid'].append(str(bookinstance.uuid))
+        print(response_json)
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
     else:
         return HttpResponseRedirect('/')
@@ -46,6 +49,7 @@ def register_book(request):
         book_form = BookForm(request.POST)
         if book_form.is_valid():
             book = book_form.save(commit=False)
+            book.nou_avaible = book_form['nou_registered']
             book.save()
             print(book)
             for _ in range(int(book.nou_registered)):    

@@ -2,64 +2,88 @@
 
 {% block content %}
 <div class="container">
-        <label for="book_name">Search Book:</label>
-        <input type="text" id="book_name" required autofocus placeholder="book name">
-        
-        <button type="button" class="btn btn-primary" onclick="search()">Search</button>
-    <hr>
-    <h1 class="jumbotron text-center">Registered Books</h1>
-    <hr>
-    <div id="main-table" class="table-responsive">
-            <div class="card shadow">
-                <div class="card-header border-0">
-                    <h3 class="mb-0">Books</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-hover">
-                        <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Availbe Units</th>
-                        <th scope="col">Assigned Units</th>
-                        <th scope="col">Assigned Units</th>
-                        </tr>
-                    <tbody id="results">
-                    </tbody>
-                </div>
+    <label for="book_name">Search Book:</label>
+    <input type="text" id="book_name" required autofocus placeholder="book name">    
+    <button type="button" class="btn btn-primary" onclick="search_book()">Search</button>
+    <a href="/library/book/register"><button type="button" class="btn btn-primary">Register New Books</button></a>
+    
+    <div id="search_table" class="table-responsive">
+        <div class="card shadow">
+            <div class="card-header border-0" id="insert_book_name">
+                
             </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                    <tr>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col"></th>
+                    </tr>
+                <tbody id="search_results">
+                </tbody>
+            </div>
+        </div>
+    </div>
+        
+
+
+
+
 </div>
-</div>
+   
+
+
+
 <script>
-    function search(){
+    $(document).ready(); { 
+        $('#search_table').hide();
+    };
+    function search_book(){
     var xhttp = new XMLHttpRequest();
     var book_name = $('#book_name').val();
-    var info = {
+    var book_info = {
         'book_name': book_name,
     };
     $.ajax ({
         type: 'POST',
         url: 'search',
-        data: JSON.stringify(info),
+        data: JSON.stringify(book_info),
         success: function(data){
-            outputData(data);
+            outputData(data);        
     }
+    }); 
+
+function outputData(data){
+    $("tr").remove(".table-row");
+    $('#book_name_show').remove();
+    $('#insert_book_name').append(
+        '<h3 class="mb-0" id="book_name_show">'+$("#book_name").val()+'</h3>');
+    y = data['uuid'].length;
+    var null_assigned;
+    var null_due_date;
+    while (y) {
+        y = y -1;
+        if(data['assigned_to'][y] == null){
+            null_assigned = "No one"
+        }
+        else {
+            null_assigned = data['assigned_to'][y]
+        }
+        console.log(null_assigned)
+        $("#search_results").append(
+            '<tr class="table-row"><td>'+null_assigned+'</td><td>'+data['due_date'][y]+'</td></tr>'
+        )
+    }
+    $(".table-row").click(function() {
+    window.document.location = $(this).data("href");
     });
-// <!-- 
-// function outputData(data){
-//     $("tr").remove(".table-row");
-//     y = data['username'].length;
-//     while (y) {
-//         y = y -1;
-//         $("#results").append(
-//                 '<tr class="table-row" data-href="'+data['username'][y]+'"><td>'+data['name'][y]+'</td><td>'+data['semester'][y]+'</td><td>'+data['username'][y]+'</td></tr>'
-//         )
-//     }
-//     $(".table-row").click(function() {
-//     window.document.location = $(this).data("href");
-//     });
-//     $("#main-table  ").show();
-// } -->
+    $("#search_table").show();
+} 
 }
 </script>
+
+
+
 <style>
         .table-row{
         cursor:pointer;
