@@ -18,3 +18,6 @@ def index(request):
 
 def search (request):
     pass
+
+def register_book(request):
+    pass
