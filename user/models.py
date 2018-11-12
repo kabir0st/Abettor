@@ -34,6 +34,9 @@ class Student(models.Model):
     # Reference Data
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.first_name +" " + self.user.last_name
+
 
 class Teacher (models.Model):
     REQUIRED_FIELDS = ('user',)

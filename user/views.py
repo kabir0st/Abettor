@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-import sweetify
 from .forms import UserForm , StudentForm, LoginForm
 from .models import Semester, FeeTable
 
@@ -58,6 +57,5 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    sweetify.sweetalert(request,'LogedOut', text = 'You Have Successfully loged Out.')
     return HttpResponseRedirect('/')
 

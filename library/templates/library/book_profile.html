@@ -1,0 +1,108 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header border-0">
+            <b><u><h1 class="mb-0">Book Name : {{ book_name }}</h1></u></b>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush table-hover">
+                <tr>
+                <th scope="col">Author Name :</th>
+                <th scope="col">{{ author_name }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Semester :</th>
+                <th scope="col">{{ semester }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Assigned To :</th>
+                <th scope="col"> {{ assigned_to }}</th>
+                </tr>
+                <tr>
+                <th scope="col">Due Date :</th>
+                <th scope="col">{{ due_date }}</th>
+                </tr>
+                <!-- <tr>
+                <th scope="col">Amount :</th>
+                <th scope="col"><input type="number" class="form-control" autofocus id="amount"><button type="button" class="btn btn-success" onclick="pay()">PAY</button></th>
+                </tr> -->
+                <tr>
+                    {% if is_assigned is True %}
+                    <th><button class="btn btn-danger">Mark As Returned</button></th>
+                    <th><button class="btn btn-warning">Extend Due Date</button></th>
+                    {% else %}
+                    <th><button class="btn btn-danger" onclick="search_student()">Assign To A Student</button></th>
+                    {% endif %}
+                </tr>
+        </div>
+    </div>
+</div>
+
+<div class="container" id='search_table'>
+    <div class="table-responsive">
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Current Semester</th>
+                    <th scope="col">Username</th>
+                    </tr>
+                <tbody id="results">
+                </tbody>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .table-row{
+    cursor:pointer;
+    }
+    .main-content {
+    margin-top: 5%;
+    }
+</style>
+          
+<script>
+     $(document).ready(function(){
+        $("#search_table").hide();
+    })
+        function search(){
+        var xhttp = new XMLHttpRequest();
+        var first_name = $('#first_name').val();
+        var last_name = $('#last_name').val();
+        var info = {
+            'first_name': first_name,
+            'last_name': last_name,
+        };
+        $.ajax ({
+            type: 'POST',
+            url: '/payment/search',
+            data: JSON.stringify(info),
+            success: function(data){
+                outputData(data);
+        }
+        });
+
+    function outputData(data){
+        $("tr").remove(".table-row");
+        y = data['username'].length;
+        while (y) {
+            y = y -1;
+            $("#results").append(
+                    '<tr class="table-row" data-href="'+data['username'][y]+'"><td>'+data['name'][y]+'</td><td>'+data['semester'][y]+'</td><td>'+data['username'][y]+'</td></tr>'
+            )
+        }
+        $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+        });
+        $("#main-table  ").show();
+    }
+}
+        
+</script>
+{% endblock %}

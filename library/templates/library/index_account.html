@@ -1,43 +1,107 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
+
 <div class="container">
     <label for="book_name">Search Book:</label>
     <input type="text" id="book_name" required autofocus placeholder="book name">    
     <button type="button" class="btn btn-primary" onclick="search_book()">Search</button>
     <a href="/library/book/register"><button type="button" class="btn btn-primary">Register New Books</button></a>
-    
+
     <div id="search_table" class="table-responsive">
         <div class="card shadow">
             <div class="card-header border-0" id="insert_book_name">
-                
             </div>
             <div class="table-responsive">
                 <table class="table align-items-center table-flush table-hover">
                     <tr>
                     <th scope="col">Assigned To</th>
                     <th scope="col">Due Date</th>
-                    <th scope="col"></th>
                     </tr>
                 <tbody id="search_results">
                 </tbody>
             </div>
         </div>
     </div>
-        
-
-
-
-
 </div>
-   
-
 
 
 <script>
+
     $(document).ready(); { 
         $('#search_table').hide();
+        $('#assign').hide();
     };
+    
+//     function assign(is_assigned,uuid) {
+//         console.log(is_assigned)
+//         if (is_assigned == "true") {
+//             swal({
+//                 cancel: true,
+                
+//             })
+//         }
+//         else { 
+//             swal({
+//                 title: "Not Yet Assigned !",
+//                 text: "Assign this book to a Student ?",
+//                 buttons: {
+//                     cancel: true,
+//                     confirm: 'Assign'
+//                     },
+//                 dangerMode: true,
+//             })
+//             .then((assign) => {
+//                 if (assign) {
+//                     swal({
+//                         title: "Enter Student Full Name",
+//                         text: 'Fisrt_name Last_name',
+//                         content: {
+//                             element: "input",
+//                             attributes: {
+//                                 placeholder: "Full Name",
+//                                 type: "text",
+//                                 },
+//                             },
+//                         dangerMode: true
+//                     })
+//                     .then((full_name) => {
+//                         $.ajax({
+//                             type: "POST",
+//                             url:'book/assign',
+//                             data: JSON.stringify({
+//                                 'uuid':uuid,
+//                                 'full_name':full_name,
+//                             }),
+//                             success: function(data){
+//                                 swal({
+//                                     title: "Book Assigned !",
+//                                     text: data['book_name']+" is assigned to "+data['full_name']+" for 2 weeks.",
+//                                     buttons: {
+//                                         confirm: 'OK !'
+//                                     },
+//                                 }).then((ok) => { 
+//                                     search_book();
+//                                 })
+//                             },
+//                             error: function() { 
+//                                 swal({
+//                                     title: "Sorry !",
+//                                     text: "An unexpected Error occured.",
+//                                     dangerMode: true,
+//                                     buttons: { 
+//                                         confirm: 'OK :( '
+//                                     }  
+//                                 })
+//                             },                          
+
+//                         });
+//                     });
+//                 } 
+//             });
+//         }
+//     } -->
+
     function search_book(){
     var xhttp = new XMLHttpRequest();
     var book_name = $('#book_name').val();
@@ -53,32 +117,41 @@
     }
     }); 
 
-function outputData(data){
-    $("tr").remove(".table-row");
-    $('#book_name_show').remove();
-    $('#insert_book_name').append(
-        '<h3 class="mb-0" id="book_name_show">'+$("#book_name").val()+'</h3>');
-    y = data['uuid'].length;
-    var null_assigned;
-    var null_due_date;
-    while (y) {
-        y = y -1;
-        if(data['assigned_to'][y] == null){
-            null_assigned = "No one"
+    function outputData(data){
+        y = data['uuid'].length;
+        $("tr").remove(".table-row");
+        $('#book_name_show').remove();
+        $('#insert_book_name').append(
+            '<h2 class="mb-0" id="book_name_show"><u><b>Book Name : '+$("#book_name").val()+'</u></h2>');
+        var null_assigned;
+        var null_due_date;
+        var table_property;
+        while (y) {
+            y = y -1;
+            if(data['is_assigned'][y]){
+                null_assigned = data['assigned_to'][y]
+            }
+            else {
+                null_assigned = 'Avaible!'
+                $('#assign').show();
+            }
+            if (data['is_overdue'][y]) {
+                table_property = 'table-danger'
+            }
+            else { 
+                if (data['is_assigned'][y]){
+                    table_property = 'Success'
+                }
+            }
+            $("#search_results").append(
+                '<tr data-href="'+data['uuid'][y]+'" class="table-row"><td class = "'+table_property+'">'+null_assigned+'</td><td>'+data['due_date'][y]+'</td></tr>'
+            )
         }
-        else {
-            null_assigned = data['assigned_to'][y]
-        }
-        console.log(null_assigned)
-        $("#search_results").append(
-            '<tr class="table-row"><td>'+null_assigned+'</td><td>'+data['due_date'][y]+'</td></tr>'
-        )
-    }
-    $(".table-row").click(function() {
-    window.document.location = $(this).data("href");
-    });
-    $("#search_table").show();
-} 
+        $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+        });
+        $("#search_table").show();
+    } 
 }
 </script>
 

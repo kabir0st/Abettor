@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'main',
     #APIs
     'bootstrap4',
-    'sweetify',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

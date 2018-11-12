@@ -28,6 +28,9 @@ class BookInstance(models.Model):
     due_date = models.DateField(null=True,blank=True)
     is_assigned = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.book.name
+
     @property
     def is_overdue(self):
         if self.due_date and date.today() > self.due_date:
