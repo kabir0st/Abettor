@@ -8,17 +8,40 @@ class Books(models.Model):
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE)
     author = models.CharField (max_length = 200)
     nou_avaible = models.PositiveIntegerField(default = 1)
-    nau_borrowed = models.PositiveIntegerField(default = 0)
+    nou_borrowed = models.PositiveIntegerField(default = 0)
     nou_registered = models.PositiveIntegerField(default = 1)
 
     def __str__(self):
         return self.name
     
+    def reset(self):
+        self.nou_avaible = self.nou_registered
+        self.nou_borrowed = 0
+        self.save()
+
     @property
     def is_avaiable(self):
         if self.nou_avaible == 0:
             return False
         return True
+
+    def assigned(self):
+        self.nou_avaible = self.nou_avaible - 1
+        self.nou_borrowed = self.nou_borrowed + 1
+        super().save()
+        return True
+
+    def returned(self):
+        self.nou_avaible = self.nou_avaible +1
+        self.nou_borrowed = self.nou_borrowed - 1
+        super().save()
+        return True
+
+
+
+
+
+
 
 class BookInstance(models.Model):
     book = models.ForeignKey(Books,on_delete = models.CASCADE)
@@ -41,7 +64,9 @@ class BookInstance(models.Model):
         if self.is_assigned == False: 
             self.assigned_to = None
             self.due_date = None
+            self.book.returned()
             super().save(*args, **kwargs)
-        else:    
+        elif self.is_assigned == True: 
+            self.book.assigned()
             super().save(*args, **kwargs)  # Call the "real" save() method.
         

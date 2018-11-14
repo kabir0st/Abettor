@@ -1,7 +1,6 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-
 <div class="container">
     <div class="card shadow">
         <div class="card-header border-0">
@@ -45,13 +44,14 @@
     </div>
 
 
-<hr>
 
 <div class="container">
+    
 <div id="search_table" class="table-responsive">
+        <hr>
     <div class="card shadow">
         <div class="card-header border-0">
-            <h3 class="mb-0">Fee Table</h3>
+            <h3 class="mb-0">Assign {{ book_name }} To : </h3>
         </div>
         <div class="table-responsive">
             <table class="table align-items-center table-flush table-hover">
@@ -68,21 +68,13 @@
 </div>
 
 
-<style>
-    .table-row{
-    cursor:pointer;
-    }
-    .main-content {
-    margin-top: 5%;
-    }
-</style>
-          
+
 <script>
-     $(document).ready(function(){
-        $("#search_table").hide();
-    })
-    
-    function search_student(){
+$(document).ready(function(){
+    $("#search_table").hide();
+})
+
+function search_student(){
         var xhttp = new XMLHttpRequest();
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
@@ -128,7 +120,7 @@
             url: '/library/book/assign',
             data: JSON.stringify(info),
             success: function(data){
-                swal("Book Assigned", {
+                swal("Book Assigned To The Selected User of username: "+data['username']+" ! ", {
                     buttons: {
                         confirm: true,
                     },
@@ -161,7 +153,7 @@
             url: '/library/book/return',
             data: JSON.stringify(info),
             success: function(data){
-                swal("Book Returned", {
+                swal("This Book is marked as returned.", {
                     buttons: {
                         confirm: true,
                     },

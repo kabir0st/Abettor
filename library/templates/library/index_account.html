@@ -9,6 +9,7 @@
     <a href="/library/book/register"><button type="button" class="btn btn-primary">Register New Books</button></a>
 
     <div id="search_table" class="table-responsive">
+        <hr>
         <div class="card shadow">
             <div class="card-header border-0" id="insert_book_name">
             </div>
@@ -20,87 +21,78 @@
                     </tr>
                 <tbody id="search_results">
                 </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
+<div class="container">
+        <div id="order_table" class="table-responsive">
+                <hr>
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Registered Book in Semester :  <select id = "select_sem" onchange="getRegisteredBooks(this.value)">
+                        <option value=1 selected="selected">First</option>
+                        <option value=2>Second</option>
+                        <option value=3>Third</option>
+                        <option value=4>Fourth</option>
+                        <option value=5>Fifth</option>
+                        <option value=6>Sixth</option>
+                        <option value=7>Seventh</option>
+                        <option value=8>Eighth</option>
+                    </select> </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Units Registered</th>
+                        <th scope="col">Avaible Units</th>
+                        </tr>
+                    <tbody id="order_results">
+                    </tbody>
+                </div>
+            </div>
+        </div>
+        </div>
+        
 
 <script>
-
     $(document).ready(); { 
         $('#search_table').hide();
-        $('#assign').hide();
+        getRegisteredBooks(1)
     };
-    
-//     function assign(is_assigned,uuid) {
-//         console.log(is_assigned)
-//         if (is_assigned == "true") {
-//             swal({
-//                 cancel: true,
-                
-//             })
-//         }
-//         else { 
-//             swal({
-//                 title: "Not Yet Assigned !",
-//                 text: "Assign this book to a Student ?",
-//                 buttons: {
-//                     cancel: true,
-//                     confirm: 'Assign'
-//                     },
-//                 dangerMode: true,
-//             })
-//             .then((assign) => {
-//                 if (assign) {
-//                     swal({
-//                         title: "Enter Student Full Name",
-//                         text: 'Fisrt_name Last_name',
-//                         content: {
-//                             element: "input",
-//                             attributes: {
-//                                 placeholder: "Full Name",
-//                                 type: "text",
-//                                 },
-//                             },
-//                         dangerMode: true
-//                     })
-//                     .then((full_name) => {
-//                         $.ajax({
-//                             type: "POST",
-//                             url:'book/assign',
-//                             data: JSON.stringify({
-//                                 'uuid':uuid,
-//                                 'full_name':full_name,
-//                             }),
-//                             success: function(data){
-//                                 swal({
-//                                     title: "Book Assigned !",
-//                                     text: data['book_name']+" is assigned to "+data['full_name']+" for 2 weeks.",
-//                                     buttons: {
-//                                         confirm: 'OK !'
-//                                     },
-//                                 }).then((ok) => { 
-//                                     search_book();
-//                                 })
-//                             },
-//                             error: function() { 
-//                                 swal({
-//                                     title: "Sorry !",
-//                                     text: "An unexpected Error occured.",
-//                                     dangerMode: true,
-//                                     buttons: { 
-//                                         confirm: 'OK :( '
-//                                     }  
-//                                 })
-//                             },                          
 
-//                         });
-//                     });
-//                 } 
-//             });
-//         }
-//     } -->
+    function getRegisteredBooks(x) {
+        var xhttp = new XMLHttpRequest();
+        var book_name = $('#book_name').val();
+        var book_info = {
+            'semester': x,
+        };
+        $.ajax ({
+            type: 'POST',
+            url: 'book/get',
+            data: JSON.stringify(book_info),
+            success: function(data){
+                outputData(data);        
+        },
+        error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+            }
+        });
+        
+        function outputData(data){
+            console.log(data);
+        }
+
+    }
 
     function search_book(){
     var xhttp = new XMLHttpRequest();
@@ -150,20 +142,10 @@
         $(".table-row").click(function() {
         window.document.location = $(this).data("href");
         });
+        $('#order_table').hide();   
         $("#search_table").show();
     } 
 }
 </script>
-
-
-
-<style>
-        .table-row{
-        cursor:pointer;
-        }
-        .main-content {
-        margin-top: 2%;
-        }
-    </style>
     
 {% endblock %}
