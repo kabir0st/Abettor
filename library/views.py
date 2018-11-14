@@ -132,10 +132,11 @@ def get_books(request):
     if request.method == "POST":
         json_str = request.body.decode(encoding='UTF-8')
         json_obj = json.loads(json_str)
-        response_json = {'book_name':[],'author':[],'registered_units':[],'avaible_units':[],'borrowed_units':[]}
+        response_json = {'id':[],'book_name':[],'author':[],'registered_units':[],'avaible_units':[],'borrowed_units':[]}
         semester = Semester.objects.get(semester = int(json_obj['semester']))
         book_set = semester.books_set.all()
-        for book in book_set:    
+        for book in book_set:
+            response_json['id'].append(book.id)    
             response_json['book_name'].append(book.name)
             response_json['author'].append(book.author)
             response_json['registered_units'].append(book.nou_registered)
@@ -145,3 +146,13 @@ def get_books(request):
     else:
         return HttpResponse("Need 404")
 
+
+def get_semester(request):
+    if request.method == 'POST':
+        response_json = {'semester':[]}
+        semesters = Semester.objects.all()
+        for sem in semesters:
+            response_json['semester'].append(sem.semester)
+        return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+    else:
+        return HttpResponse("Need 404")

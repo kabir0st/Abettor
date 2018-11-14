@@ -33,14 +33,7 @@
             <div class="card shadow">
                 <div class="card-header border-0">
                     <h3 class="mb-0">Registered Book in Semester :  <select id = "select_sem" onchange="getRegisteredBooks(this.value)">
-                        <option value=1 selected="selected">First</option>
-                        <option value=2>Second</option>
-                        <option value=3>Third</option>
-                        <option value=4>Fourth</option>
-                        <option value=5>Fifth</option>
-                        <option value=6>Sixth</option>
-                        <option value=7>Seventh</option>
-                        <option value=8>Eighth</option>
+    
                     </select> </h3>
                 </div>
                 <div class="table-responsive">
@@ -48,8 +41,9 @@
                         <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Author</th>
-                        <th scope="col">Units Registered</th>
+                        <th scope="col">Registered Units</th>
                         <th scope="col">Avaible Units</th>
+                        <th scope="col">Borrowed Units</th>
                         </tr>
                     <tbody id="order_results">
                     </tbody>
@@ -59,21 +53,53 @@
         </div>
         
 
+
 <script>
     $(document).ready(); { 
         $('#search_table').hide();
-        getRegisteredBooks(1)
+        getSemester();
     };
+
+    function getSemester(){
+        var xhttp = new XMLHttpRequest();
+        info = {
+            'request': "get_semester",
+        }
+        $.ajax ({
+            type: 'POST',
+            url: 'get/sem',
+            data: JSON.stringify(info),
+            success: function(data){
+                outputData(data);        
+        },
+        error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+            }
+        });
+        function outputData(data){
+            y = y = data['semester'].length;
+            while (y) {
+            y = y -1;
+            $("#select_sem").append(
+                '<option value = '+data['semester'][y]+'>'+data['semester'][y]+'</option>'
+            )
+        }
+        }
+    }
 
     function getRegisteredBooks(x) {
         var xhttp = new XMLHttpRequest();
-        var book_name = $('#book_name').val();
         var book_info = {
             'semester': x,
         };
         $.ajax ({
             type: 'POST',
-            url: 'book/get',
+            url: 'get/book',
             data: JSON.stringify(book_info),
             success: function(data){
                 outputData(data);        
@@ -89,8 +115,20 @@
         });
         
         function outputData(data){
-            console.log(data);
+        y = data['book_name'].length;
+        $("tr").remove(".table-row");
+        while (y) {
+            y = y -1;
+            $("#order_results").append(
+                '<tr data-href="'+data['id'][y]+'" class="table-row"><td>'+data['book_name'][y] +'</td><td>'+data['author'][y] +'</td><td>'+data['registered_units'][y] +'</td><td>'+data['avaible_units'][y] +'</td><td>'+data['borrowed_units'][y] +'</td></tr>'
+            )
         }
+        $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+        });
+        $("#search_table").hide();
+        $('#order_table').show(); 
+    } 
 
     }
 

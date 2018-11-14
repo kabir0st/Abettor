@@ -10,5 +10,6 @@ urlpatterns = [
     path('book/return',views.book_returned, name = "Return Book"),
     path('book/extend',views.extend_due_date, name = "Extend Due date"),
     
-    path('book/get',views.get_books, name = "Extend Due date"),
+    path('get/sem',views.get_semester, name = "get list of semester"),
+    path('get/book',views.get_books, name = "get books according to semester"),
 ]
