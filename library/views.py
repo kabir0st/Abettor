@@ -66,34 +66,64 @@ def assign_book(request):
     if request.method == 'POST':
         json_str = request.body.decode(encoding = 'UTF-8')
         data = json.loads(json_str)
-        print(data)
-        name = str(data['full_name']).split(" ")
-        print(name)
-        if (name.__len__() > 2):
-            return 0
-        else:
-            book = BookInstance.objects.get(uuid= data['uuid'])
-            user = CustomUser.objects.get(first_name = name[0], last_name = name[1])
-            student = Student.objects.get(user = user)
-            book.assigned_to = student
-            book.is_assigned = True
-            book.due_date = date.today() + timedelta(days=14)
-            book.save()
-            response_json = { 
-                'book_name': book.book.name,
-                'full_name': data['full_name']
-            }
-            return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+        book = BookInstance.objects.get(uuid= data['uuid'])
+        user = CustomUser.objects.get(username = data['username'])
+        student = Student.objects.get(user = user)
+        book.assigned_to = student
+        book.is_assigned = True
+        book.due_date = date.today() + timedelta(days=14)
+        book.save()
+        response_json = { 
+            'book_name': book.book.name,
+            'username': data['username']
+        }
+        return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+
 
 def book_info(request,uuid): 
     response_json = {}
-    book = BookInstance.objects.get(uuid= uuid)
-    response_json['book_name'] = book.book.name
-    response_json['author_name'] = book.book.author
-    response_json['semester'] = book.book.semester
-    response_json['is_overdue'] = (book.is_overdue)
-    response_json['assigned_to']= (str(book.assigned_to))
-    response_json['due_date'] = (str(book.due_date))
-    response_json['is_assigned']= (book.is_assigned)
-    response_json['uuid']=(str(book.uuid))
-    return render (request,'library/book_profile.html',response_json)
+    try:
+        book = BookInstance.objects.get(uuid= uuid)
+        response_json['book_name'] = book.book.name
+        response_json['author_name'] = book.book.author
+        response_json['semester'] = book.book.semester
+        response_json['is_overdue'] = (book.is_overdue)
+        response_json['assigned_to']= (str(book.assigned_to))
+        response_json['due_date'] = (str(book.due_date))
+        response_json['is_assigned']= (book.is_assigned)
+        response_json['uuid']=(str(book.uuid))
+        if (book.is_assigned):
+            response_json['username'] = book.assigned_to.user.username
+        return render (request,'library/book_profile.html',response_json)
+    except:
+        return HttpResponse("Redirect to 404 page")
+
+
+def book_returned(request):
+    if request.method == 'POST':
+        json_str = request.body.decode(encoding = 'UTF-8')
+        data = json.loads(json_str)
+        book = BookInstance.objects.get(uuid= data['uuid'])
+        book.is_assigned = False 
+        book.save()
+        response_json = { 
+            'book_name': book.book.name,
+        }
+        return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+    else:
+        return HttpResponse("Redirect to 404 page")
+
+
+def extend_due_date(request):
+    if request.method == 'POST':
+        json_str = request.body.decode(encoding = 'UTF-8')
+        data = json.loads(json_str)
+        book = BookInstance.objects.get(uuid= data['uuid'])
+        book.due_date = book.due_date + timedelta(days=14)
+        book.save()
+        response_json = { 
+            'book_name': book.book.name,
+        }
+        return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+    else:
+        return HttpResponse("Redirect to 404 page")

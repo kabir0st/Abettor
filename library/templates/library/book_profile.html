@@ -19,42 +19,52 @@
                 </tr>
                 <tr>
                 <th scope="col">Assigned To :</th>
-                <th scope="col"> {{ assigned_to }}</th>
+                <th scope="col"> {{ assigned_to }} <small> {{ username }} </small></th>
                 </tr>
                 <tr>
                 <th scope="col">Due Date :</th>
                 <th scope="col">{{ due_date }}</th>
                 </tr>
-                <!-- <tr>
-                <th scope="col">Amount :</th>
-                <th scope="col"><input type="number" class="form-control" autofocus id="amount"><button type="button" class="btn btn-success" onclick="pay()">PAY</button></th>
-                </tr> -->
-                <tr>
                     {% if is_assigned is True %}
-                    <th><button class="btn btn-danger">Mark As Returned</button></th>
-                    <th><button class="btn btn-warning">Extend Due Date</button></th>
-                    {% else %}
-                    <th><button class="btn btn-danger" onclick="search_student()">Assign To A Student</button></th>
-                    {% endif %}
+                <tr>
+                    <th><button class="btn btn-danger" onclick="mark_returned()">Mark As Returned</button></th>
+                    <th><button class="btn btn-warning" onclick="extend_due_date()">Extend Due Date</button></th>
                 </tr>
+                    {% else %}
+                <tr>
+                    <th><input class="form-control" type="text" placeholder="First Name" id="first_name"></th>
+                    <th><input class="form-control" type="text" placeholder="Last Name" id ="last_name"></th>
+                </tr>
+                <tr>
+                    <th><button class="btn btn-danger" onclick="search_student()">Search Student</button></th>
+                </tr>
+                    {% endif %}
+                    </table>
+                    </div>
+        </div>
+    </div>
+
+
+<hr>
+
+<div class="container">
+<div id="search_table" class="table-responsive">
+    <div class="card shadow">
+        <div class="card-header border-0">
+            <h3 class="mb-0">Fee Table</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush table-hover">
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Current Semester</th>
+                <th scope="col">Username</th>
+                </tr>
+            <tbody id="results">
+            </tbody>
         </div>
     </div>
 </div>
-
-<div class="container" id='search_table'>
-    <div class="table-responsive">
-            <div class="table-responsive">
-                <table class="table align-items-center table-flush table-hover">
-                    <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Current Semester</th>
-                    <th scope="col">Username</th>
-                    </tr>
-                <tbody id="results">
-                </tbody>
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -71,7 +81,8 @@
      $(document).ready(function(){
         $("#search_table").hide();
     })
-        function search(){
+    
+    function search_student(){
         var xhttp = new XMLHttpRequest();
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
@@ -85,10 +96,12 @@
             data: JSON.stringify(info),
             success: function(data){
                 outputData(data);
-        }
+            }
         });
+    }
 
-    function outputData(data){
+
+    function outputData(data){        
         $("tr").remove(".table-row");
         y = data['username'].length;
         while (y) {
@@ -98,11 +111,110 @@
             )
         }
         $(".table-row").click(function() {
-        window.document.location = $(this).data("href");
+        var x = $(this).data("href");
+        assign(x);
         });
-        $("#main-table  ").show();
+        $("#search_table").show();
     }
-}
-        
+    
+    function assign(username){ 
+        uuid = '{{ uuid }}'
+        info = {
+            'username':username,
+            'uuid':uuid,
+            }
+        $.ajax ({
+            type: 'POST',
+            url: '/library/book/assign',
+            data: JSON.stringify(info),
+            success: function(data){
+                swal("Book Assigned", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }            
+        });
+        }
+
+    function mark_returned() {
+        info = {
+            'username': '{{ username }}',
+            'uuid': '{{ uuid }}',
+        }
+        $.ajax ({
+            type: 'POST',
+            url: '/library/book/return',
+            data: JSON.stringify(info),
+            success: function(data){
+                swal("Book Returned", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }   
+    })
+    }
+     
+    function extend_due_date() {
+        info = {
+            'username': '{{ username }}',
+            'uuid': '{{ uuid }}',
+        }
+        $.ajax ({
+            type: 'POST',
+            url: '/library/book/extend',
+            data: JSON.stringify(info),
+            success: function(data){
+                swal("Due Date Exteneded By 2 Weeks", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }   
+    })
+    }
 </script>
 {% endblock %}

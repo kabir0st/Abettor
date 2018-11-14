@@ -20,7 +20,7 @@ class Semester(models.Model):
 
 
 class FeeTable(models.Model):
-    REQUIRED_FIELDS = ('student',)
+    REQUIRED_FIELDS = ('student',) 
     student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True)
     paid_till_now = models.PositiveIntegerField(default = 0)
     
@@ -35,7 +35,7 @@ class Student(models.Model):
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.first_name +" " + self.user.last_name
+        return self.user.first_name + " " +self.user.last_name
 
 
 class Teacher (models.Model):

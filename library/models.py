@@ -36,3 +36,12 @@ class BookInstance(models.Model):
         if self.due_date and date.today() > self.due_date:
             return True
         return False
+
+    def save(self, *args, **kwargs):
+        if self.is_assigned == False: 
+            self.assigned_to = None
+            self.due_date = None
+            super().save(*args, **kwargs)
+        else:    
+            super().save(*args, **kwargs)  # Call the "real" save() method.
+        
