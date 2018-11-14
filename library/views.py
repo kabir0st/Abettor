@@ -26,9 +26,13 @@ def search(request):
     if request.method == "POST":
         json_str = request.body.decode(encoding='UTF-8')
         json_obj = json.loads(json_str)
-        book_name = str(json_obj['book_name'])
+        if (json_obj['search_type'] == 'name'):
+            books = Books.objects.filter(name = json_obj['book_name'])        
+        elif (json_obj['search_type'] == 'id'):
+            books = Books.objects.filter(id = json_obj['id'])
+        else:
+            return HttpResponseRedirect('/')
         response_json = {'assigned_to':[], 'due_date': [], 'is_assigned':[],'uuid':[],'is_overdue':[]}
-        books = Books.objects.filter(name = book_name)
         for book in books:        
                 temp_book = BookInstance.objects.filter(book = book)
                 for bookinstance in temp_book:
@@ -156,3 +160,4 @@ def get_semester(request):
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
     else:
         return HttpResponse("Need 404")
+
