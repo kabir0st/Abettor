@@ -24,6 +24,7 @@
                 <th scope="col">Due Date :</th>
                 <th scope="col">{{ due_date }}</th>
                 </tr>
+                {% if user.is_librarian == true %}
                     {% if is_assigned is True %}
                 <tr>
                     <th><button class="btn btn-danger" onclick="mark_returned()">Mark As Returned</button></th>
@@ -37,6 +38,7 @@
                 <tr>
                     <th><button class="btn btn-danger" onclick="search_student()">Search Student</button></th>
                 </tr>
+                    {% endif %}
                     {% endif %}
                     </table>
                     </div>

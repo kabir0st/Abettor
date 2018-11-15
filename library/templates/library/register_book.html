@@ -3,7 +3,7 @@
 {% block content %}
 {% load staticfiles %}
 {% load bootstrap4 %}
-
+{% if user.is_librarian == True %}
 <div class="main-content">
     <div class="card-body">
       <div class="row justify-content-center">     
@@ -14,6 +14,7 @@
         {% buttons %}
         <button type="submit" class="btn btn-primary">Regsiter</button>
         {% endbuttons %}
+        {% endif %}
       </form>
     </div>
   </div>

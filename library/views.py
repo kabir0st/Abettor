@@ -16,10 +16,8 @@ def check(user):
 
 @login_required
 def index(request):
-    if check(request.user):
-        return render(request,'library/index_account.html')
-    else:
-        return render(request,'library/index_student.html')
+    return render(request,'library/index_account.html')
+    
 
 
 def search(request):

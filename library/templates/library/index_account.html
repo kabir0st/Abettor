@@ -6,7 +6,10 @@
     <label for="book_name">Search Book:</label>
     <input type="text" id="book_name" required autofocus placeholder="book name">    
     <button type="button" class="btn btn-primary" onclick="search_book()">Search</button>
+    
+    {% if user.is_librarian == True %}
     <a href="/library/book/register"><button type="button" class="btn btn-primary">Register New Books</button></a>
+    {% endif %}
     <button type="button" class="btn btn-primary" id='explore_button' onclick="show_explore_table()">Explore Books</button>
     <div id="search_table" class="table-responsive">
         <hr>
