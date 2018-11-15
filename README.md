@@ -7,8 +7,7 @@ Note: Still in developement
 
 ## TODO LIST
 1. Profile Development
-2. Link library/<book>'s assigned to student profile
+2. Add undo button on library and billing
 3. Add Subject in semester
 4. Create requirements.txt and fixtures 
-
-many more to come ...
+5. Improve themeing
