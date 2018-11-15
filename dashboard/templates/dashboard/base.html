@@ -85,13 +85,20 @@
               <i class="ni ni-money-coins text-green"></i> Billing
             </a>
           </li>
-          {% if user.is_student == false %}
+          {% if user.is_accountant == True %}
           <li class="nav-item">
               <a class="nav-link" href="/user/new">
                 <i class="ni ni-money-coins text-green"></i> Student Registration
               </a>
             </li>
             {% endif %}
+            {% if user.is_teacher == True %}
+            <li class="nav-item">
+                <a class="nav-link" href="/results/">
+                  <i class="ni ni-money-coins text-green"></i> Exam Results
+                </a>
+              </li>
+              {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ni ni-bullet-list-67 text-red"></i> My Performance
@@ -102,13 +109,14 @@
               <i class="ni ni-key-25 text-info"></i> Notice Board
             </a>
           </li>
-          {% if user.is_student == true %}
+          {% if user.is_student == True %}
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="fas fa-comments text-black"></i> Discussion  Board
             </a>
           </li>
           {% endif %}
+
           <li class="nav-item">
             <a class="nav-link" href="./examples/profile.html">
               <i class="ni ni-single-02 text-blue"></i> My profile
