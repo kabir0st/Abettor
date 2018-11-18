@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 import datetime 
+from datetime  import date
 
 class CustomUser(AbstractUser):
     is_student = models.BooleanField(default=True)
@@ -22,7 +23,7 @@ class Semester(models.Model):
 
 
 class Year(models.Model):
-    year = models.PositiveIntegerField(default = 0)
+    year = models.PositiveIntegerField(default = date.today().year)
 
     def __str__(self):
         return self.year
@@ -42,7 +43,7 @@ class Student(models.Model):
     registered_on = models.DateTimeField (default = datetime.datetime.now)
     # Reference Data
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    year = models.ForeignKey(Year,on_delete= models.CASCADE)
+    year = models.ForeignKey(Year,on_delete= models.CASCADE,default = date.today().year)
 
     def __str__(self):
         return self.user.first_name + " " +self.user.last_name

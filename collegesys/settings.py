@@ -25,7 +25,7 @@ SECRET_KEY = '3!s6ki65*-f3s6iux!c-s$@%e!#o3q8c@hi%_xtj^njnchv(s^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,11 +80,12 @@ WSGI_APPLICATION = 'collegesys.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
 }
 
