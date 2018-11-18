@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import datetime
+import datetime 
 
 class CustomUser(AbstractUser):
     is_student = models.BooleanField(default=True)
@@ -11,12 +11,21 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name + self.last_name
 
+
 class Semester(models.Model):
     fee = models.IntegerField(default= 52000)
     semester = models.PositiveIntegerField(default = 1)
     
     def __str__(self):
         return str(self.semester) 
+
+
+
+class Year(models.Model):
+    year = models.PositiveIntegerField(default = 0)
+
+    def __str__(self):
+        return self.year
 
 
 class FeeTable(models.Model):
@@ -33,6 +42,7 @@ class Student(models.Model):
     registered_on = models.DateTimeField (default = datetime.datetime.now)
     # Reference Data
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    year = models.ForeignKey(Year,on_delete= models.CASCADE)
 
     def __str__(self):
         return self.user.first_name + " " +self.user.last_name
@@ -45,3 +55,16 @@ class Teacher (models.Model):
 
     # def __str__(self):
     #     return self.user.first_name
+
+
+
+class Subject(models.Model):
+    name = models.CharField(max_length = 200)
+    semester = models.ForeignKey(Semester, on_delete = models.CASCADE)
+    teacher = models.ForeignKey(Teacher,on_delete = models.CASCADE)
+
+class Result(models.Model):
+    year = models.ForeignKey(Year,on_delete= models.CASCADE)
+    semester = models.ForeignKey(Semester,on_delete= models.CASCADE)
+    student = models.ForeignKey(Student,on_delete= models.CASCADE)
+
