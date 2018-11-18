@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import datetime 
 from datetime  import date
+from django_mysql.models import ListCharField
 
 class CustomUser(AbstractUser):
     is_student = models.BooleanField(default=True)
@@ -16,7 +17,13 @@ class CustomUser(AbstractUser):
 class Semester(models.Model):
     fee = models.IntegerField(default= 52000)
     semester = models.PositiveIntegerField(default = 1)
-    
+    subjects = ListCharField(
+        base_field = models.CharField(max_length = 30),
+        size = 7,
+        max_length  = (7*31),
+        blank = True
+    )
+
     def __str__(self):
         return str(self.semester) 
 
@@ -67,5 +74,12 @@ class Subject(models.Model):
 class Result(models.Model):
     year = models.ForeignKey(Year,on_delete= models.CASCADE)
     semester = models.ForeignKey(Semester,on_delete= models.CASCADE)
+    
+class ReportCard(models.Model):
     student = models.ForeignKey(Student,on_delete= models.CASCADE)
-
+    marks = ListCharField(
+        base_field = models.PositiveIntegerField(default= 0),
+        size = 7,
+        max_length = (7*4),
+        blank =True
+    )
