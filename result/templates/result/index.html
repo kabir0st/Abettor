@@ -9,7 +9,7 @@
     <button type="button" class="btn btn-primary" onclick="search_student()">Search</button>
     
     {% if user.is_teacher == True %}
-    <a href="/results/publish"><button type="button" class="btn btn-primary">Publish New Result</button></a>
+    <a href="/results/new-draft"><button type="button" class="btn btn-primary">Publish New Result Draft</button></a>
     {% endif %}
     <button type="button" class="btn btn-primary" id='explore_button' onclick="show_explore_table()">Explore Results</button>
     <div id="explore_table" class="table-responsive">

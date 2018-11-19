@@ -1,7 +1,5 @@
 from django.db import models
-from datetime  import date
-from django_mysql.models import ListCharField
-from user.models import Semester,Teacher,Student
+from user.models import Semester,Teacher,Student,Subject
 from django.utils import timezone
 
 class Result(models.Model):
@@ -10,10 +8,9 @@ class Result(models.Model):
     
 class ReportCard(models.Model):
     student = models.ForeignKey(Student,on_delete= models.CASCADE)
-    marks = ListCharField(
-        base_field = models.PositiveIntegerField(default= 0),
-        size = 7,
-        max_length = (7*4),
-        blank =True
-    )
     result = models.ForeignKey(Result,on_delete=models.CASCADE)
+
+class Marks(models.Model):
+    reportcard = models.ForeignKey(ReportCard,on_delete = models.CASCADE)
+    mark = models.PositiveIntegerField()
+    subject = models.ForeignKey(Subject,on_delete = models.CASCADE)

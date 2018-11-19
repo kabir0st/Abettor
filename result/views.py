@@ -22,7 +22,7 @@ def verify_semester(sem):
 		return False
 
 
-def publish_result(request):
+def publish_result_draft(request):
 	if request.method == "POST":
 			pass
 	else:

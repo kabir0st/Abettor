@@ -16,12 +16,6 @@ class CustomUser(AbstractUser):
 class Semester(models.Model):
     fee = models.IntegerField(default= 52000)
     semester = models.PositiveIntegerField(default = 1)
-    subjects = ListCharField(
-        base_field = models.CharField(max_length = 30),
-        size = 7,
-        max_length  = (7*31),
-        blank = True
-    )
 
     def __str__(self):
         return str(self.semester) 
