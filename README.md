@@ -7,14 +7,15 @@
 ```
  1. Python3.5 
  2. Mysql (Both Client and Server For Developement Purposes)
- 3. libmysqlclient-dev
-    Tutorial : https://support.rackspace.com/how-to/installing-mysql-server-on-ubun Tutorial : https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/
+3. libmysqlclient-dev
 ```
-Install Deprendencies :
+Tutorial For MySql Installation : https://support.rackspace.com/how-to/installing-mysql-server-on-ubun Tutorial : https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/
+
+### Install Deprendencies :
 ```
 pip install --user - requirements.txt
 ```
-Run server :
+### Run server :
 ```
 python3 manager.py runserver
 ```
