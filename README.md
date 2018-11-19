@@ -26,6 +26,6 @@ Access the website using localhost:8000 after the server is successfully running
 1. Profile Development
 2. Add undo button on library and billing
 3. Improve themeing
-4. Register subjects using semester.subjects[]
+4. Register Book with semester and subjects
 
 #### Note: Still in developement
