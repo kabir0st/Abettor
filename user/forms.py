@@ -21,7 +21,7 @@ class StudentForm(ModelForm):
     
     class Meta:
         model = Student
-        fields = ['current_semester','phone_number','dob']
+        fields = ['current_semester','phone_number']
 
 
 class LoginForm(forms.Form):

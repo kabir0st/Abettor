@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from user.models import Student, Semester
 from .forms import ResultForm
-
+from .models import ReportCard
 
 @login_required
 def index(request):
@@ -24,7 +24,18 @@ def verify_semester(sem):
 
 def publish_result_draft(request):
 	if request.method == "POST":
-			pass
+		result_form = ResultForm(request.POST)
+		if (result_form.is_valid()):
+			result = result_form.save()
+			students_on_sem = Student.objects.filter(semester = result_form.cleaned_data['semester'])
+			for student in students_on_sem:
+				reportcard = ReportCard(student = student,result = result)
+				reportcard.save()
+			return render(request,'result_draft')
 	else:
 		resultform = ResultForm()
-		return render(request, 'result/publish_result.html', {'result_form':resultform})
+		return render(request, 'result/create_new_draft.html', {'result_form':resultform})
+
+
+def show_daft(request):
+	pass

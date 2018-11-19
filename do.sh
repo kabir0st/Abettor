@@ -14,6 +14,9 @@ if [ -n "$1" ]; then
 	echo ''
         python3 manage.py migrate
 	echo ''
+    elif [ $1 == 'loaddata' ]; then
+        echo 'Loading initial data'
+        python3 manage.py loaddata initialdata
     elif [ $1 == 'fmig' ]; then
         echo 'doing full migration'
         python3 manage.py makemigrations

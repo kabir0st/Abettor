@@ -35,7 +35,7 @@ def search(request):
             student = Student.objects.get(user = user)
             response_json['username'].append(user.username)
             response_json['name'].append(user.first_name + " " + user.last_name)
-            response_json['semester'].append(str(student.current_semester))
+            response_json['semester'].append(str(student.semester))
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
     else:
         return HttpResponseRedirect('/')
@@ -51,7 +51,7 @@ def get_info(request,username):
     all_sem = Semester.objects.all()
     for x in all_sem:
         whole_fee = whole_fee + x.fee
-        if( x  == student.current_semester):
+        if( x  == student.semester):
             break
     temp = whole_fee - paid_till_now
     dues = 0
@@ -63,7 +63,7 @@ def get_info(request,username):
     data = {
         'username': username,
         'name': user.first_name + " " + user.last_name,
-        'current_semester': str(student.current_semester),
+        'current_semester': str(student.semester),
         'dues':dues,
         'credits':credit,
     }
@@ -95,7 +95,7 @@ def get_info_student(username):
     all_sem = Semester.objects.all()
     for x in all_sem:
         whole_fee = whole_fee + x.fee
-        if( x  == student.current_semester):
+        if( x  == student.semester):
             break
     temp = whole_fee - paid_till_now
     dues = 0
@@ -107,7 +107,7 @@ def get_info_student(username):
     data = {
         'username': username,
         'name': user.first_name + " " + user.last_name,
-        'current_semester': str(student.current_semester),
+        'current_semester': str(student.semester),
         'dues':dues,
         'credits':credit,
     }

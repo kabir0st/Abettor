@@ -4,10 +4,7 @@
         "pk":1,
         "fields":{
             "fee": 52000,
-            "semester":1,
-            "subjects":[
-                "Introduction To Infromation Technology","Fundamentals Of Computer Programming","Statics-I","Calculus And Analytical Geometry"
-            ]
+            "semester":1
         }
     },
     {
@@ -15,10 +12,7 @@
         "pk":2,
         "fields":{
             "fee": 55000,
-            "semester":2,
-            "subjects":[
-                "Digital Logic","Discrite Structure","Microprocessor","Data Structure And Algorithm","Linear Algebra","Static-II"
-            ]
+            "semester":2
         }
     },
 
@@ -27,10 +21,244 @@
         "pk":3,
         "fields":{
             "fee": 55000,
-            "semester":3,
-            "subjects":[
-                "Computer Architecture","Object Oriented Programming Langauge","Opearting System","Numerical Methods","Introduction To Management"    
-            ]
+            "semester":3
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":4,
+        "fields":{
+            "fee": 55000,
+            "semester":4
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":5,
+        "fields":{
+            "fee": 55000,
+            "semester":5
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":6,
+        "fields":{
+            "fee": 55000,
+            "semester":6
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":7,
+        "fields":{
+            "fee": 55000,
+            "semester":7
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":8,
+        "fields":{
+            "fee": 55000,
+            "semester":8
+        }
+    },
+
+    {
+        "model":"user.customuser",
+        "pk":2,
+        "fields":{
+            "username":"teacher1",
+            "password":"teacher",
+            "first_name":"teacher1",
+            "last_name":"teacher1"    
+        }
+    },
+
+    {
+        "model":"user.customuser",
+        "pk":3,
+        "fields":{
+            "username":"teacher2",
+            "password":"teacher",
+            "first_name":"teacher2",
+            "last_name":"teacher2"    
+        }
+    },
+
+    {
+        "model":"user.customuser",
+        "pk":4,
+        "fields":{
+            "username":"teacher3",
+            "password":"teacher",
+            "first_name":"teacher3",
+            "last_name":"teacher3"    
+        }
+    },
+
+    {
+        "model":"user.customuser",
+        "pk":5,
+        "fields":{
+            "username":"teacher4",
+            "password":"teacher",
+            "first_name":"teacher4",
+            "last_name":"teacher4"    
+        }
+    },
+
+    {
+        "model":"user.customuser",
+        "pk":6,
+        "fields":{
+            "username":"teacher5",
+            "password":"teacher",
+            "first_name":"teacher5",
+            "last_name":"teacher5"    
+        }
+    },
+    {
+        "model":"user.customuser",
+        "pk":7,
+        "fields":{
+            "username":"student1",
+            "password":"student",
+            "first_name":"student",
+            "last_name":"student"    
+        }
+    },
+    {
+        "model":"user.customuser",
+        "pk":8,
+        "fields":{
+            "username":"student2",
+            "password":"student",
+            "first_name":"student",
+            "last_name":"student"    
+        }
+    },
+    {
+        "model":"user.customuser",
+        "pk":9,
+        "fields":{
+            "username":"student3",
+            "password":"student",
+            "first_name":"student",
+            "last_name":"student"    
+        }
+    },
+    {
+        "model":"user.customuser",
+        "pk":10,
+        "fields":{
+            "username":"student4",
+            "password":"student",
+            "first_name":"student",
+            "last_name":"student"    
+        }
+    },
+    {
+        "model":"user.student",
+        "pk":1,
+        "fields":{
+            "user":7,
+            "semester":1    
+        }
+    },
+    {
+        "model":"user.student",
+        "pk":2,
+        "fields":{
+            "user":8,
+            "semester":1    
+        }
+    },{
+        "model":"user.student",
+        "pk":3,
+        "fields":{
+            "user":9,
+            "semester":1    
+        }
+    },{
+        "model":"user.student",
+        "pk":4,
+        "fields":{
+            "user":10,
+            "semester":1    
+        }
+    },
+    {
+        "model":"user.teacher",
+        "pk":1,
+        "fields":{
+            "user":2
+        }
+    },
+
+    {
+        "model":"user.teacher",
+        "pk":2,
+        "fields":{
+            "user":3
+        }
+    },
+
+    {
+        "model":"user.teacher",
+        "pk":3,
+        "fields":{
+            "user":4
+        }
+    },
+
+    {
+        "model":"user.teacher",
+        "pk":4,
+        "fields":{
+            "user":5
+        }
+    },
+
+    {
+        "model":"user.teacher",
+        "pk":5,
+        "fields":{
+            "user":6
+        }
+    },
+    {
+        "model":"user.subject",
+        "pk":1,
+        "fields":{
+            "name":"C",
+            "semester":1,
+            "teacher":2
+        }
+    },
+    {
+        "model":"user.subject",
+        "pk":2,
+        "fields":{
+            "name":"ITI",
+            "semester":1,
+            "teacher":3
+        }
+    },
+    {
+        "model":"user.subject",
+        "pk":3,
+        "fields":{
+            "name":"Maths",
+            "semester":1,
+            "teacher":4
         }
     }
+
 ]
