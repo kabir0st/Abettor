@@ -1,0 +1,24 @@
+
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load bootstrap4 %}
+
+<div class="main-content">
+    <div class="card-body">
+      <div class="justify-content-center"> 
+          <h1>Register New Result For Exam</h1>    
+          <hr>
+      <form method="post">
+          {% csrf_token %}
+        {{ field.errors }}
+        {% bootstrap_form result_form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Regsiter</button>
+        {% endbuttons %}
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}

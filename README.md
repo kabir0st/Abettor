@@ -25,8 +25,7 @@ Access the website using localhost:8000 after the server is successfully running
 ## TODO LIST
 1. Profile Development
 2. Add undo button on library and billing
-3. Add Subject in semester
-4. Create requirements.txt and fixtures 
-5. Improve themeing
+3. Improve themeing
+4. Register subjects using semester.subjects[]
 
 #### Note: Still in developement
