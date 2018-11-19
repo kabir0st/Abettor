@@ -1,0 +1,36 @@
+[
+    {
+        "model":"user.semester",
+        "pk":1,
+        "fields":{
+            "fee": 52000,
+            "semester":1,
+            "subjects":[
+                "Introduction To Infromation Technology","Fundamentals Of Computer Programming","Statics-I","Calculus And Analytical Geometry"
+            ]
+        }
+    },
+    {
+        "model":"user.semester",
+        "pk":2,
+        "fields":{
+            "fee": 55000,
+            "semester":2,
+            "subjects":[
+                "Digital Logic","Discrite Structure","Microprocessor","Data Structure And Algorithm","Linear Algebra","Static-II"
+            ]
+        }
+    },
+
+    {
+        "model":"user.semester",
+        "pk":3,
+        "fields":{
+            "fee": 55000,
+            "semester":3,
+            "subjects":[
+                "Computer Architecture","Object Oriented Programming Langauge","Opearting System","Numerical Methods","Introduction To Management"    
+            ]
+        }
+    }
+]

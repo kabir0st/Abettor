@@ -1,8 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import datetime 
-from datetime  import date
 from django_mysql.models import ListCharField
+from django.utils import timezone
 
 class CustomUser(AbstractUser):
     is_student = models.BooleanField(default=True)
@@ -28,14 +27,6 @@ class Semester(models.Model):
         return str(self.semester) 
 
 
-
-class Year(models.Model):
-    year = models.PositiveIntegerField(default = date.today().year)
-
-    def __str__(self):
-        return self.year
-
-
 class FeeTable(models.Model):
     REQUIRED_FIELDS = ('student',) 
     student = models.OneToOneField('Student',on_delete = models.CASCADE , primary_key = True)
@@ -46,11 +37,9 @@ class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key = True, related_name = 'student',unique = True)
     # Normal Profile Data
     phone_number = models.CharField(max_length = 15)
-    dob = models.DateField(default = datetime.date.today)
-    registered_on = models.DateTimeField (default = datetime.datetime.now)
+    dob = models.DateField(blank  =True)
     # Reference Data
     current_semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    year = models.ForeignKey(Year,on_delete= models.CASCADE,default = date.today().year)
 
     def __str__(self):
         return self.user.first_name + " " +self.user.last_name
@@ -71,15 +60,4 @@ class Subject(models.Model):
     semester = models.ForeignKey(Semester, on_delete = models.CASCADE)
     teacher = models.ForeignKey(Teacher,on_delete = models.CASCADE)
 
-class Result(models.Model):
-    year = models.ForeignKey(Year,on_delete= models.CASCADE)
-    semester = models.ForeignKey(Semester,on_delete= models.CASCADE)
-    
-class ReportCard(models.Model):
-    student = models.ForeignKey(Student,on_delete= models.CASCADE)
-    marks = ListCharField(
-        base_field = models.PositiveIntegerField(default= 0),
-        size = 7,
-        max_length = (7*4),
-        blank =True
-    )
+
