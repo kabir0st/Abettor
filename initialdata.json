@@ -264,7 +264,7 @@
         "model":"user.feetable",
         "pk":1,
         "fields":{
-            "student":1,
+            "student":7,
             "paid_till_now":0
         }
     },
@@ -272,7 +272,7 @@
         "model":"user.feetable",
         "pk":2,
         "fields":{
-            "student":1,
+            "student":8,
             "paid_till_now":0
         }
     },
@@ -280,7 +280,7 @@
         "model":"user.feetable",
         "pk":3,
         "fields":{
-            "student":1,
+            "student":9,
             "paid_till_now":0
         }
     },
@@ -288,7 +288,7 @@
         "model":"user.feetable",
         "pk":4,
         "fields":{
-            "student":1,
+            "student":10,
             "paid_till_now":0
         }
     }
