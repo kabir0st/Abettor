@@ -259,6 +259,38 @@
             "semester":1,
             "teacher":4
         }
+    },
+    {
+        "model":"user.feetable",
+        "pk":1,
+        "fields":{
+            "student":1,
+            "paid_till_now":0
+        }
+    },
+    {
+        "model":"user.feetable",
+        "pk":2,
+        "fields":{
+            "student":1,
+            "paid_till_now":0
+        }
+    },
+    {
+        "model":"user.feetable",
+        "pk":3,
+        "fields":{
+            "student":1,
+            "paid_till_now":0
+        }
+    },
+    {
+        "model":"user.feetable",
+        "pk":4,
+        "fields":{
+            "student":1,
+            "paid_till_now":0
+        }
     }
 
 ]
