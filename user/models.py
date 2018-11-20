@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django_mysql.models import ListCharField
 from django.utils import timezone
 
 
