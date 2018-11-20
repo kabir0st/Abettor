@@ -7,7 +7,7 @@
 ```
  1. Python3.5 
  2. Mysql (Both Client and Server For Developement Purposes)
-`3. libmysqlclient-dev
+ 3. libmysqlclient-dev
 ```
 Tutorial For MySql Installation : https://support.rackspace.com/how-to/installing-mysql-server-on-ubun 
 
