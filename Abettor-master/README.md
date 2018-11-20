@@ -1,21 +1,18 @@
 # Abettor
-#### College project for Software Engineering, 6th semester, BSc. CSIT
+#### College project for 6th semester, Software Engineering.
  Abettor is a web services that helps in efficient information flow between different working bodies of the college administration and students creating a information ecosystem for efficient governing of the college.This system helps with the daily routine of college management and reduces the paperwork to minimum, saving time and making data easily accessible.
 
 
 # Requirements
 ```
- 1. Python3.5 
- 2. Mysql (Both Client and Server For Developement Purposes)
-`3. libmysqlclient-dev
+Python3.5 
 ```
-Tutorial For MySql Installation : https://support.rackspace.com/how-to/installing-mysql-server-on-ubun 
-
-### Install Deprendencies :
+Install Deprendencies :
 ```
 pip install --user - requirements.txt
+pip3 install(for ubuntu)
 ```
-### Run server :
+Run server :
 ```
 python3 manage.py runserver
 ```
@@ -25,7 +22,8 @@ Access the website using localhost:8000 after the server is successfully running
 ## TODO LIST
 1. Profile Development
 2. Add undo button on library and billing
-3. Improve themeing
-4. Register Book with semester and subjects
+3. Add Subject in semester
+4. Create requirements.txt and fixtures 
+5. Improve themeing
 
 #### Note: Still in developement
