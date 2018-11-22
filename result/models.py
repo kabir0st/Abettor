@@ -5,6 +5,7 @@ from django.utils import timezone
 class Result(models.Model):
     date = models.DateField(default = timezone.now)
     semester = models.ForeignKey(Semester,on_delete= models.CASCADE)
+    more_info = models.TextField(max_length=100,blank=True)
     
 class ReportCard(models.Model):
     student = models.ForeignKey(Student,on_delete= models.CASCADE)

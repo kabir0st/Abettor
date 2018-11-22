@@ -22,9 +22,9 @@
                 </tr>
                 <tr>
                 <th scope="col">Due Date :</th>
-                <th scope="col">{{ due_date }}</th>
+                <th scope="col">{{ due_date }} {{ user.is_librarian }}</th>
                 </tr>
-                {% if user.is_librarian == true %}
+                {% if user.is_librarian == True %}
                     {% if is_assigned is True %}
                 <tr>
                     <th><button class="btn btn-danger" onclick="mark_returned()">Mark As Returned</button></th>

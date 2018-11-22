@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from user.models import Student, Semester
 from .forms import ResultForm
-from .models import ReportCard
+from .models import ReportCard,Result
+import json
 
 @login_required
 def index(request):
@@ -31,11 +32,24 @@ def publish_result_draft(request):
 			for student in students_on_sem:
 				reportcard = ReportCard(student = student,result = result)
 				reportcard.save()
-			return render(request,'result_draft')
+			return render(request,'result/result_draft.html')
 	else:
 		resultform = ResultForm()
 		return render(request, 'result/create_new_draft.html', {'result_form':resultform})
 
 
-def show_daft(request):
-	pass
+def list_draft(request,semester):
+	response_json = {'date':[],'uuid':[],'semester':[]}
+	if verify_semester(semester):
+		result_list = Result.objects.filter(semester = semester)
+		for result in result_list:
+			response_json['date'].append(result.date)
+			response_json['uuid'].append(result.uuid)
+			response_json['semester'].append(str(result.semester))
+		return render('list_draft.html',response_json)
+
+def show_draft(request):
+	if request.method == "POST":
+		json_str = request.body.decode(encoding='UTF-8')
+		json_obj = json.loads(json_str)
+		pass

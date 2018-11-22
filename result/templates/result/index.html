@@ -3,11 +3,6 @@
 {% block content %}
 
 <div class="container">
-    <label for="book_name">Search Student:</label>
-    <input type="text" id="first_name" required autofocus placeholder="First Name">
-    <input type="text" id="last_name" required autofocus placeholder="Last Name">    
-    <button type="button" class="btn btn-primary" onclick="search_student()">Search</button>
-    
     {% if user.is_teacher == True %}
     <a href="/results/new-draft"><button type="button" class="btn btn-primary">Create New Result Draft</button></a>
     {% endif %}
@@ -116,63 +111,6 @@
         window.document.location = $(this).data("href");
         });
         }
-    }
-
-    function search_student(){
-        var xhttp = new XMLHttpRequest();
-        var first_name = $('#first_name').val();
-        var last_name = $('#last_name').val();
-        var info = {
-            'search_type':'name',
-            'first_name': first_name,
-            'last_name': last_name,
-        };
-        $.ajax ({
-            type: 'POST',
-            url: 'search',
-            data: JSON.stringify(book_info),
-            success: function(data){
-                outputData(data);        
-        }
-        }); 
-
-        function outputData(data){
-            y = data['uuid'].length;
-            $("tr").remove(".table-row");
-            $('#book_name_show').remove();
-            $('#insert_book_name').append(
-                '<h2 class="mb-0" id="book_name_show"><u><b>Book Name : '+$("#book_name").val()+'</u></h2>');
-            var null_assigned;
-            var null_due_date;
-            var table_property;
-            while (y) {
-                y = y -1;
-                if(data['is_assigned'][y]){
-                    null_assigned = data['assigned_to'][y]
-                }
-                else {
-                    null_assigned = 'Avaible!'
-                    $('#assign').show();
-                }
-                if (data['is_overdue'][y]) {
-                    table_property = 'table-danger'
-                }
-                else { 
-                    if (data['is_assigned'][y]){
-                        table_property = 'Success'
-                    }
-                }
-                $("#search_results").append(
-                    '<tr data-href="'+data['uuid'][y]+'" class="table-row"><td class = "'+table_property+'">'+null_assigned+'</td><td>'+data['due_date'][y]+'</td></tr>'
-                )
-            }
-            $(".table-row").click(function() {
-            window.document.location = $(this).data("href");
-            });
-            $('#order_table').hide();   
-            $("#search_table").show();
-            $('#explore_button').show();
-        } 
     }
 </script>
     
