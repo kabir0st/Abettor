@@ -6,11 +6,7 @@
 # Requirements
 ```
  1. Python3.5 
- 2. Mysql (Both Client and Server For Developement Purposes)
- 3. libmysqlclient-dev
 ```
-Tutorial For MySql Installation : https://support.rackspace.com/how-to/installing-mysql-server-on-ubun 
-
 ### Install Deprendencies :
 ```
 pip install --user - requirements.txt
@@ -27,5 +23,6 @@ Access the website using localhost:8000 after the server is successfully running
 2. Add undo button on library and billing
 3. Improve themeing
 4. Register Book with semester and subjects
+5. Update the landing page 
 
 #### Note: Still in developement
