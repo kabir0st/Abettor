@@ -9,7 +9,7 @@
 ```
 ### Install Deprendencies :
 ```
-pip install --user - requirements.txt
+pip install --user -r requirements.txt
 ```
 ### Run server :
 ```
