@@ -1,0 +1,76 @@
+
+{% extends 'dashboard/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div id="explore_table" class="table-responsive">
+        <hr>
+        <div class="card shadow">
+            <div class="card-header border-0" id="select_title">
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                <tbody>
+                    <tr><th>Information</th><th>Semester</th><th>Date</th></tr>
+                </tbody>
+                <tbody id = 'results'>
+
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+    .table-row{
+    cursor:pointer;
+    }
+    .main-content {
+    margin-top: 5%;
+    }
+</style>
+          
+<script>
+    $(document).ready(function(){
+        get_data();
+    })
+
+    function get_data(){
+        var xhttp = new XMLHttpRequest();
+        var semester = '{{ data.semester }}'
+        var pk = '{{ pk }}'
+        var info = {
+            'semester': semester,
+            'pk':pk,
+        };
+        $.ajax ({
+            type: 'POST',
+            url: window.location.href,
+            data: JSON.stringify(info),
+            success: function(data){
+                outputData(data);
+        }
+        });
+
+    function outputData(data){
+        $("tr").remove(".table-row");
+        console.log(data)
+    //     y = data['date'].length;
+    //     while (y) {
+    //         y = y -1;
+    //         $("#results").append(
+    //                 '<tr class="table-row" data-href="'+data['pk'][y]+'"><td>'+data['more_info'][y]+'</td><td>'+data['semester'][y]+'</td><td>'+data['date'][y]+'</td></tr>'
+    //         )
+    //     }
+    //     $(".table-row").click(function() {
+    //     window.document.location = $(this).data("href");
+    //     });
+    }
+}
+</script>
+{% endblock %}

@@ -13,5 +13,5 @@ class ReportCard(models.Model):
 
 class Marks(models.Model):
     reportcard = models.ForeignKey(ReportCard,on_delete = models.CASCADE)
-    mark = models.PositiveIntegerField()
+    mark = models.PositiveIntegerField(default = 0)
     subject = models.ForeignKey(Subject,on_delete = models.CASCADE)
