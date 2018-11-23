@@ -49,22 +49,25 @@ def show_draft(request,semester,pk):
 		json_str = request.body.decode(encoding='UTF-8')
 		json_obj = json.loads(json_str)
 		pk = json_obj['pk']
-		semester = json_obj['semester']
+		print(json_obj['semester'])
+		semester =Semester.objects.get(semester = int(json_obj['semester']))
 		result = Result.objects.get(id = pk)
-		response_json = {'subjects':[],'reportcard_detail':{'student_name':"",'student_username':"",'marks':[]}}
-		# response_json['date'].append(result.date)
-		# response_json['more_info'].append(result.more_info)
-		# response_json['semester'].append(str(result.semester))
+		response_json = {'subjects':[],'reportcard':[]}
+		response_json['date'] = str(result.date)
+		response_json['more_info'] = (result.more_info)
+		response_json['semester']= (str(result.semester))
 		reportcards = ReportCard.objects.filter(result = result)
 		subjects = Subject.objects.filter(semester = semester )
 		for subject in subjects:
 			response_json['subjects'].append(subject.name)
 		for reportcard in reportcards:
-			response_json['reportcard_detail']['student_name'] = str(reportcard.student)
-			response_json['reportcard_detail']['student_username'] = str(reportcard.student.user.username)
+			temp_json = {'marks':[]}
+			temp_json['student_name'] = (str(reportcard.student))
+			temp_json['student_username'] = (str(reportcard.student.user.username))
 			for subject in subjects:
 				mark = Marks.objects.get(subject = subject, reportcard = reportcard)
-				response_json['reportcard_detail']['marks'].append(mark)
+				temp_json['marks'].append(mark.mark)
+			response_json['reportcard'].append(temp_json)
 		return HttpResponse(json.dumps(response_json),content_type = 'application/json')
 	else:
 		response_json = {'semester':semester,'pk':pk}
