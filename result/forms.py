@@ -10,4 +10,4 @@ class ResultForm(ModelForm):
     
     class Meta(UserCreationForm):
         model = Result
-        fields = ['date','semester']
+        fields = ['date','semester','more_info']
