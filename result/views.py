@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from user.models import Student, Semester, Subject
 from .forms import ResultForm
@@ -87,3 +87,37 @@ def list_draft(request,semester):
 	else:
 		response_json = {'semester':semester}
 		return render(request,'result/list_draft.html',response_json)
+
+
+def assign_mark(request,semester,pk):
+	if request.method == "POST":
+		json_str = request.body.decode(encoding='UTF-8')
+		json_obj = json.loads(json_str)
+		do = json_obj['do']
+		if (do == "get_data"):
+			pk = json_obj['pk']
+			semester =Semester.objects.get(semester = int(json_obj['semester']))
+			result = Result.objects.get(id = pk)
+			response_json = {'subjects':[],'reportcard':[]}
+			response_json['date'] = str(result.date)
+			response_json['more_info'] = (result.more_info)
+			response_json['semester']= (str(result.semester))
+			reportcards = ReportCard.objects.filter(result = result)
+			subjects = Subject.objects.filter(semester = semester )
+			for subject in subjects:
+				response_json['subjects'].append(subject.name)
+			for reportcard in reportcards:
+				temp_json = {}
+				temp_json['student_name'] = (str(reportcard.student))
+				temp_json['student_username'] = (str(reportcard.student.user.username))
+				for subject in subjects:
+					mark = Marks.objects.get(subject = subject, reportcard = reportcard)
+					temp_json[str(subject)]  = mark.mark
+				response_json['reportcard'].append(temp_json)
+			return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+		elif (do == "assign_mark"):
+			print("smther")
+			print(json_obj)
+	else:
+		response_json = {'semester':semester,'pk':pk}
+		return render(request,'result/assign_mark.html',response_json)

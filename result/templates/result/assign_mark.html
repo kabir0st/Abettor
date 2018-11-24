@@ -19,7 +19,7 @@
         </div>
     </div>
     <br>
-    <button class="btn btn-success" onclick="assign()">Assign Marks</button> 
+    <button class="btn btn-success" onclick="assign()">Assign</button> 
 </div>
 
 
@@ -36,6 +36,8 @@
 </style>
           
 <script>
+    var recived_data;
+
     $(document).ready(function(){
         get_data();
     })
@@ -49,6 +51,7 @@
         var semester = '{{ semester }}'
         var pk = '{{ pk }}'
         var info = {
+            'do':'get_data',
             'semester': semester,
             'pk':pk,
         };
@@ -62,6 +65,7 @@
         });
 
         function outputData(data){
+            recived_data = data
             $("tr").remove(".table-row");
             console.log(data)
             $("#select_title").append(
@@ -80,13 +84,39 @@
             for (x in data['reportcard']){
                 for (sub in data['subjects']) {
                     mark = (data['reportcard'][x][data['subjects'][sub]])
-                    $("#"+data['reportcard'][x]['student_username']).append(
-                        '<td>'+mark+'</td>'
-                    )
+                        $("#"+data['reportcard'][x]['student_username']).append(
+                        '<td><input type="number" value="'+mark+'" id="'+data['reportcard'][x]['student_username']+'_'+data['subjects'][sub]+'"></td>'
+                        )                    
                 }
             }
             
         }
     }
+
+    function assign(){
+        response_data = {'subjects':[],'reportcard':[],'do':'assign_mark'}
+        for (sub in recived_data['subjects']){
+            response_data['subjects'].push(recived_data['subjects'][sub])
+        }
+        for (x in recived_data['reportcard']){
+            temp_json = {}
+            temp_json['student_name'] = recived_data['reportcard'][x]['student_name']
+            temp_json['student_username'] = recived_data['reportcard'][x]['student_username']
+            for (sub in recived_data['subjects']){
+                searchstring = recived_data['reportcard'][x]['student_username']+'_'+recived_data['subjects'][sub]
+                mark = $("#"+searchstring).val()
+                console.log(mark)
+                temp_json[recived_data['subjects'][sub]] = mark
+            }
+            response_data['reportcard'].push(temp_json)
+        }
+        $.ajax ({
+            type: 'POST',
+            url: window.location.href,
+            data: JSON.stringify(response_data),
+            success: location.reload(),
+        });
+    }
+
 </script>
 {% endblock %}
