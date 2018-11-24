@@ -49,7 +49,6 @@ def show_draft(request,semester,pk):
 		json_str = request.body.decode(encoding='UTF-8')
 		json_obj = json.loads(json_str)
 		pk = json_obj['pk']
-		print(json_obj['semester'])
 		semester =Semester.objects.get(semester = int(json_obj['semester']))
 		result = Result.objects.get(id = pk)
 		response_json = {'subjects':[],'reportcard':[]}
@@ -67,7 +66,6 @@ def show_draft(request,semester,pk):
 			for subject in subjects:
 				mark = Marks.objects.get(subject = subject, reportcard = reportcard)
 				temp_json[str(subject)]  = mark.mark
-				print(mark.mark)
 			response_json['reportcard'].append(temp_json)
 		return HttpResponse(json.dumps(response_json),content_type = 'application/json')
 	else:
