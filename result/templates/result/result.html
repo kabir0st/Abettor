@@ -19,7 +19,9 @@
         </div>
     </div>
     <br>
+    {% if user.is_teacher == True %}
     <button class="btn btn-success" onclick="assign()">Assign Marks</button> 
+    {% endif %}
 </div>
 
 

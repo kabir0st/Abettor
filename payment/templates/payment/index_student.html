@@ -49,7 +49,15 @@
           
 <script>
         function pay(){
-            alert("Khalti Support Comming Soon")
-        };        
+                swal("Hang On ! Khati Service is comming soon.", {
+                    dangermode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }      
 </script>
 {% endblock %}

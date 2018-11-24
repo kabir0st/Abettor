@@ -105,7 +105,6 @@
             for (sub in recived_data['subjects']){
                 searchstring = recived_data['reportcard'][x]['student_username']+'_'+recived_data['subjects'][sub]
                 mark = $("#"+searchstring).val()
-                console.log(mark)
                 temp_json[recived_data['subjects'][sub]] = mark
             }
             response_data['reportcard'].push(temp_json)
@@ -114,7 +113,27 @@
             type: 'POST',
             url: window.location.href,
             data: JSON.stringify(response_data),
-            success: location.reload(),
+            success: function(data){
+                swal("The Marks Has Been Updated! ", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }            
         });
     }
 

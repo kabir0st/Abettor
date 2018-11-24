@@ -6,7 +6,6 @@
     {% if user.is_teacher == True %}
     <a href="/results/new-draft"><button type="button" class="btn btn-primary">Create New Result Draft</button></a>
     {% endif %}
-    <button type="button" class="btn btn-primary" id='explore_button' onclick="show_explore_table()">Explore Results</button>
     <div id="explore_table" class="table-responsive">
         <hr>
         <div class="card shadow">
@@ -27,7 +26,6 @@
 <script>
     $(document).ready(); { 
         $('#search_table').hide();
-        $('#explore_button').hide();
         getSemester();
 
     };

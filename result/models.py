@@ -20,7 +20,7 @@ class ReportCard(models.Model):
 
 class Marks(models.Model):
     reportcard = models.ForeignKey(ReportCard,on_delete = models.CASCADE)
-    mark = models.PositiveIntegerField(blank = True,validators=[MaxValueValidator(100),MinValueValidator(0)])
+    mark = models.PositiveIntegerField(default = 0)
     subject = models.ForeignKey(Subject,on_delete = models.CASCADE)
 
     def __str__(self):
