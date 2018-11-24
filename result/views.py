@@ -61,12 +61,13 @@ def show_draft(request,semester,pk):
 		for subject in subjects:
 			response_json['subjects'].append(subject.name)
 		for reportcard in reportcards:
-			temp_json = {'marks':[]}
+			temp_json = {}
 			temp_json['student_name'] = (str(reportcard.student))
 			temp_json['student_username'] = (str(reportcard.student.user.username))
 			for subject in subjects:
 				mark = Marks.objects.get(subject = subject, reportcard = reportcard)
-				temp_json['marks'].append(mark.mark)
+				temp_json[str(subject)]  = mark.mark
+				print(mark.mark)
 			response_json['reportcard'].append(temp_json)
 		return HttpResponse(json.dumps(response_json),content_type = 'application/json')
 	else:

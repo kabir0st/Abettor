@@ -50,4 +50,6 @@ class Subject(models.Model):
     semester = models.ForeignKey(Semester, on_delete = models.CASCADE)
     teacher = models.ForeignKey(Teacher,on_delete = models.CASCADE)
 
+    def __str__(self):
+        return self.name
 
