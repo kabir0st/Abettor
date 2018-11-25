@@ -4,7 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import UserForm , StudentForm, LoginForm
-from .models import Semester, FeeTable
+from .models import Semester, FeeTable,CustomUser
+import json
+
 
 def check(user):
     if user.is_accountant == True:
@@ -37,21 +39,24 @@ def registration(request):
 
 
 def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username = username, password = password)
-            if user is not None:
-                login(request,user)
-                return HttpResponseRedirect('/dashboard')
-            else:
-                messages.error(request,'Username or Password is not correct.')
-                return HttpResponseRedirect('login')           
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/dashboard')
     else:
-        form = LoginForm()
-        return render (request, 'user/login.html',{'form':form})
+        if request.method == 'POST':
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = authenticate(request, username = username, password = password)
+                if user is not None:
+                    login(request,user)
+                    return HttpResponseRedirect('/dashboard')
+                else:
+                    messages.error(request,'Username or Password is not correct.')
+                    return HttpResponseRedirect('login')           
+        else:
+            form = LoginForm()
+            return render (request, 'user/login.html',{'form':form})
 
 
 @login_required
@@ -59,3 +64,26 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
+def user_qrlogin(request):
+    if request.method == "POST":
+        response_json = {}
+        json_str = request.body.decode(encoding='UTF-8')
+        json_obj = json.loads(json_str)
+        uuid = json_obj['uuid']
+        try:
+            user = CustomUser.objects.get(uuid = uuid)
+            pin_number = json_obj['pin_number']
+            if (str(pin_number) == str(user.pin_number)):
+                login(request,user)
+                response_json['status'] = True
+                return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+            else:
+                response_json['status'] = False
+                response_json['error'] = "Sorry, The pin is invalid."
+                return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+            
+        except:
+            response_json['status'] = False
+            response_json['error'] = "The Scanned Qr code has no User."
+            return HttpResponse(json.dumps(response_json),content_type = 'application/json')

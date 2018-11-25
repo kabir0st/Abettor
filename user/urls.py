@@ -5,5 +5,6 @@ urlpatterns = [
     path('new',views.registration, name = 'User Registration'),
     path('login',views.user_login, name = 'Login User'),
     path('logout',views.user_logout, name = 'Logout'),
+    path('qrlogin',views.user_qrlogin, name = "qrlogin")
 ]
 

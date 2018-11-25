@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
-    uuid = models.UUIDField(unique=True,default= uuid.uuid4,help_text="Unique ID for this particular book across whole library")
+    uuid = models.UUIDField(unique=True,default= uuid.uuid4)
     pin_number =  models.IntegerField(default=666,validators=[MaxValueValidator(999), MinValueValidator(100)])
 
     def __str__(self):
