@@ -17,6 +17,11 @@
   <link href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
   <!-- Argon CSS -->
   <link type="text/css" href="{% static 'assets/css/argon.css' %}" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="{% static 'login/css/login.css' %}">
+  <script type="text/javascript" src="{% static 'login/js/jsqrscanner.nocache.js' %}"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 </head>
 
 <body class="bg-default">
@@ -26,6 +31,26 @@
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8">
       <div class="container">
+
+          <div id="myModal" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="qrscanner flip" id="scanner">
+                </div>    
+              </div>
+            </div>
+            <div class="modal" id="scanned_output">
+              <div class="modal-content">
+                    <span class="cross">&times;</span>
+                    <div id = "output">
+
+                    </div>
+                </div>
+              </div>
+            </div>
+            
+            
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
@@ -72,16 +97,14 @@
                     <input class="form-control" placeholder="Password" type="password" name = "password" id="password">
                   </div>
                 </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                  <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                  </label>
-                </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Login</button>
+                  <p>OR</p>
                 </div>
               </form>
+              <div class="text-center">
+                <button class="btn btn-danger" onclick="opencamera()">Use QR Code</button>
+              </div>
             </div>
           </div>
           <div class="row mt-3">
@@ -97,8 +120,11 @@
   <!-- Core -->
   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'login/js/login.js' %}"></script>
+
   <!-- Argon JS -->
   <script src="{% static 'assets/js/argon.js' %}"></script>
+
 </body>
 
 </html>
