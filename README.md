@@ -24,5 +24,10 @@ Access the website using localhost:8000 after the server is successfully running
 3. Improve themeing
 4. Register Book with semester and subjects
 5. Update the landing page 
+6. QR code implementation
+7. Write Complete Fixture
+8. User setting page
+
+more to come ...
 
 #### Note: Still in developement
