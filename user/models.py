@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-
+import uuid
 
 
 class CustomUser(AbstractUser):
@@ -9,6 +9,9 @@ class CustomUser(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
+    uuid = models.UUIDField(default= uuid.uuid4,help_text="UUID for QR login",unique = True)
+    pin_number = models.PositiveIntegerField(max_length = 3)
+    profile_image = models.ImageField(upload_to = 'images/librarian/', default = 'images/none.jpg')
 
     def __str__(self):
         return self.first_name + self.last_name
@@ -37,18 +40,37 @@ class Student(models.Model):
     def __str__(self):
         return self.user.first_name + " " +self.user.last_name
 
-class Teacher (models.Model):
+
+class Accountant(models.Model):
+    REQUIRED_FIELDS = ('user',)
+    user = models.OneToOneField(CustomUser, on_delete = models.CASCADE, primary_key = True, related_name = 'teacher', unique = True)
+    contact_number = models.CharField(blank = True, max_length = 14)
+    uuid = models.UUIDField(default= uuid.uuid4,help_text="UUID for QR login",unique = True)
+    pin_number = models.PositiveIntegerField(max_length = 3)
+
+
+class Librarian(models.Model):
     REQUIRED_FIELDS = ('user',)
     user = models.OneToOneField(CustomUser, on_delete = models.CASCADE, primary_key = True, related_name = 'teacher', unique = True)
     contact_number = models.CharField(blank = True, max_length = 14)
 
-    # def __str__(self):
-    #     return self.user.first_name
+
+class Teacher (models.Model):
+    REQUIRED_FIELDS = ('user',)
+    user = models.OneToOneField(CustomUser, on_delete = models.CASCADE, primary_key = True, related_name = 'teacher', unique = True)
+    contact_number = models.CharField(blank = True, max_length = 14)
+    uuid = models.UUIDField(default= uuid.uuid4,help_text="UUID for QR login",unique = True)
+    pin_number = models.PositiveIntegerField(max_length = 3)
+    profile_image = models.ImageField(upload_to = 'images/teacher/', default = 'images/none.jpg')
+
 
 class Subject(models.Model):
     name = models.CharField(max_length = 200)
     semester = models.ForeignKey(Semester, on_delete = models.CASCADE)
     teacher = models.ForeignKey(Teacher,on_delete = models.CASCADE)
+    uuid = models.UUIDField(default= uuid.uuid4,help_text="UUID for QR login",unique = True)
+    pin_number = models.PositiveIntegerField(max_length = 3)
+    profile_image = models.ImageField(upload_to = 'images/student/', default = 'images/none.jpg')
 
     def __str__(self):
         return self.name

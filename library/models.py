@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import Student,Semester
+from user.models import Student,Semester,Subject
 import uuid #for unique book instances 
 from datetime import date
 

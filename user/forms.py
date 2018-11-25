@@ -18,10 +18,10 @@ class UserForm(UserCreationForm,ModelForm):
 class StudentForm(ModelForm):
     current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
     phone_number = forms.CharField(min_length= 6, max_length=15, required = True)
-    
+    profile_image = forms.ImageField()
     class Meta:
         model = Student
-        fields = ['current_semester','phone_number']
+        fields = ['current_semester','phone_number','profile_image']
 
 
 class LoginForm(forms.Form):

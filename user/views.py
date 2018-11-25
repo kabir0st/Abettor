@@ -59,3 +59,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+# @login_required
+# # def show_user_profile(request,usernae):
+# #     user = User.objects.get(username = username)
+# #     response_json = {}
