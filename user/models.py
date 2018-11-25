@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-
+from django.core.validators import MaxValueValidator, MinValueValidator
+import uuid
 
 
 class CustomUser(AbstractUser):
@@ -9,6 +10,8 @@ class CustomUser(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default =False)
     is_accountant = models.BooleanField(default= False)
+    uuid = models.UUIDField(unique=True,default= uuid.uuid4,help_text="Unique ID for this particular book across whole library")
+    pin_number =  models.IntegerField(default=666,validators=[MaxValueValidator(999), MinValueValidator(100)])
 
     def __str__(self):
         return self.first_name + self.last_name
