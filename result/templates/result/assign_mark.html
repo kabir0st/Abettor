@@ -1,8 +1,11 @@
 
 {% extends 'dashboard/base.html' %}
 {% block content %}
-
-<div class="container">
+<div class="mid" id='loading'>
+<div class="loader">
+</div>
+</div>
+<div class="container" id="maincon">
     <div class="card shadow">
         <div class="card-header border-0" id="select_title">
                     
@@ -33,6 +36,30 @@
     .main-content {
     margin-top: 5%;
     }
+    .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-bottom: 16px solid blue;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.mid {
+    height: 200px;
+    width: 400px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+}
 </style>
           
 <script>
@@ -40,6 +67,8 @@
 
     $(document).ready(function(){
         get_data();
+        $("#loading").hide();
+        $("#maincon").show();
     })
 
     function assign(){
@@ -67,13 +96,11 @@
         function outputData(data){
             recived_data = data
             $("tr").remove(".table-row");
-            console.log(data)
             $("#select_title").append(
                 '<h1>'+data['more_info']+'</h1><h3>Semester: '+data['semester']+'</h3><h3>Date: '+data['date']+'</h3>'
             )
             for (sub in data['subjects']){
                 $("#subjects").append('<th><h4>'+data['subjects'][sub]+'</h4></th>')
-                console.log(data['subjects'][sub])
             }
             for (y in data['reportcard']){
                 $("#results").append(
@@ -84,8 +111,10 @@
             for (x in data['reportcard']){
                 for (sub in data['subjects']) {
                     mark = (data['reportcard'][x][data['subjects'][sub]])
+                    id_value = data['reportcard'][x]['student_username']+'_'+data['subjects'][sub]
+                    id_val = id_value.split(' ').join('_')
                         $("#"+data['reportcard'][x]['student_username']).append(
-                        '<td><input type="number" value="'+mark+'" id="'+data['reportcard'][x]['student_username']+'_'+data['subjects'][sub]+'"></td>'
+                        '<td><input type="number" value="'+mark+'" id="'+id_val+'"></td>'
                         )                    
                 }
             }
@@ -103,12 +132,19 @@
             temp_json['student_name'] = recived_data['reportcard'][x]['student_name']
             temp_json['student_username'] = recived_data['reportcard'][x]['student_username']
             for (sub in recived_data['subjects']){
-                searchstring = recived_data['reportcard'][x]['student_username']+'_'+recived_data['subjects'][sub]
+                xx = recived_data['reportcard'][x]['student_username']+'_'+recived_data['subjects'][sub]
+                searchstring = xx.split(' ').join('_')
                 mark = $("#"+searchstring).val()
-                temp_json[recived_data['subjects'][sub]] = mark
+                if (mark == undefined){
+                    temp_json[recived_data['subjects'][sub]] = 0
+                }else{
+                    temp_json[recived_data['subjects'][sub]] = mark
+                }
             }
             response_data['reportcard'].push(temp_json)
         }
+        $("#maincon").hide();
+        $("#loading").show();
         $.ajax ({
             type: 'POST',
             url: window.location.href,
@@ -133,6 +169,10 @@
                     .then(() => {
                         location.reload();                        
                     })
+            },
+            complete: function() {
+                $("#loading").hide();
+                $("#maincon").show();
             }            
         });
     }

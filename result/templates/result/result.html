@@ -65,13 +65,11 @@
 
         function outputData(data){
             $("tr").remove(".table-row");
-            console.log(data)
             $("#select_title").append(
                 '<h1>'+data['more_info']+'</h1><h3>Semester: '+data['semester']+'</h3><h3>Date: '+data['date']+'</h3>'
             )
             for (sub in data['subjects']){
                 $("#subjects").append('<th><h4>'+data['subjects'][sub]+'</h4></th>')
-                console.log(data['subjects'][sub])
             }
             for (y in data['reportcard']){
                 $("#results").append(

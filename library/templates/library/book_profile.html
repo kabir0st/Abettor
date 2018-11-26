@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                 <th scope="col">Due Date :</th>
-                <th scope="col">{{ due_date }} {{ user.is_librarian }}</th>
+                <th scope="col">{{ due_date }}</th>
                 </tr>
                 {% if user.is_librarian == True %}
                     {% if is_assigned is True %}

@@ -8,7 +8,7 @@ import json
 from datetime import date,timedelta
 
 def check(user):
-    if user.is_accountant == True:
+    if user.is_accountant == True or user.is_librarian:
         return True
     else:
         return False
@@ -19,7 +19,7 @@ def index(request):
     return render(request,'library/index_account.html')
     
 
-
+@login_required
 def search(request):
     if request.method == "POST":
         json_str = request.body.decode(encoding='UTF-8')
@@ -44,7 +44,7 @@ def search(request):
         return HttpResponseRedirect('/')
 
 
-
+@user_passes_test(check,login_url='/dashboard')
 def register_book(request):
     if request.method == 'POST':
         book_form = BookForm(request.POST)
@@ -64,6 +64,7 @@ def register_book(request):
         return render(request, 'library/register_book.html', {'book_form':book_form})
 
 
+@user_passes_test(check,login_url='/dashboard')
 def assign_book(request):
     if request.method == 'POST':
         json_str = request.body.decode(encoding = 'UTF-8')
@@ -101,6 +102,7 @@ def book_info(request,uuid):
         return HttpResponse("Redirect to 404 page")
 
 
+@user_passes_test(check,login_url='/dashboard')
 def book_returned(request):
     if request.method == 'POST':
         json_str = request.body.decode(encoding = 'UTF-8')
@@ -116,6 +118,7 @@ def book_returned(request):
         return HttpResponse("Redirect to 404 page")
 
 
+@user_passes_test(check,login_url='/dashboard')
 def extend_due_date(request):
     if request.method == 'POST':
         json_str = request.body.decode(encoding = 'UTF-8')
@@ -158,4 +161,3 @@ def get_semester(request):
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
     else:
         return HttpResponse("Need 404")
-
