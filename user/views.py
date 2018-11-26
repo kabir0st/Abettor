@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import UserForm , StudentForm, LoginForm
-from .models import Semester, FeeTable,CustomUser
+from .models import Semester, FeeTable,CustomUser,Student
 import json
 
 
@@ -87,3 +87,39 @@ def user_qrlogin(request):
             response_json['status'] = False
             response_json['error'] = "The Scanned Qr code has no User."
             return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+        
+@login_required
+def profile_setting(request):
+    if request.method == "POST":
+        response_json = {}
+        json_str = request.body.decode(encoding='UTF-8')
+        json_obj = json.loads(json_str)
+        if (json_obj['get']):
+            user = request.user
+            response_json ={'first_name': user.first_name,'last_name':user.last_name,'email':user.email,'pin_number':user.pin_number}
+            if (user.is_student):
+                student = Student.objects.get(user = user)
+                response_json['phone_number'] = student.phone_number
+            return HttpResponse(json.dumps(response_json),content_type = 'application/json')
+        else:
+            print(json_obj)
+            user = CustomUser.objects.get(username = request.user.username)
+            if (json_obj['first_name']):
+                user.first_name = json_obj['first_name']
+            if (json_obj['last_name']):
+                user.last_name = json_obj['last_name']
+            if (json_obj['email']):
+                user.email = json_obj['email']
+            if (json_obj['pin_number']):
+                user.pin_number = json_obj['pin_number']
+            user.save()
+            if user.is_student:
+                student = Student.objects.get(user = user)
+                if(json_obj['phone_number']):
+                    student.phone_number = json_obj['phone_number']
+                student.save()
+            return HttpResponse("all good")
+    else:
+        return render(request,'user/profile_setting.html')
+                
+

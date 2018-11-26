@@ -1,0 +1,150 @@
+
+{% extends 'dashboard/base.html' %}
+{% block content %}
+{% load staticfiles %}
+  <!-- Top navbar -->
+  <br>
+  <br>
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-9 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <form>
+              <h6 class="heading-small text-muted mb-4">User information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-first-name">First name</label>
+                      <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-last-name">Last name</label>
+                      <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name"  value="">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email">Email address</label>
+                      <input type="email" id="input-email" class="form-control form-control-alternative"  value="">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" >Pin Number </label>
+                      <input type="number" id="input-pin-number" class="form-control form-control-alternative"  value="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% if user.is_student %}
+              <hr class="my-4" />
+              <h6 class="heading-small text-muted mb-4">Contact information</h6>
+              <div class="pl-lg-4">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Phone Number </label>
+                    <input type="number" id="input-phone-number" class="form-control form-control-alternative"  value="">
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <button class="btn btn-success" onclick="update()">Update Profile</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+  $(document).ready(function(){
+   assignValue();
+});
+
+function assignValue(){
+  $("button").click(function(){
+        $("#w3s").attr("href", "https://www.w3schools.com/jquery/");
+  });
+  var xhttp = new XMLHttpRequest();
+        var info = {
+            'get': true,
+        };
+        $.ajax ({
+            type: 'POST',
+            url: '/user/setting',
+            data: JSON.stringify(info),
+            success: function(data){
+                assign(data);
+            }
+        });
+        function assign(data){
+          $("#input-first-name").attr("placeholder", data['first_name']);
+          $("#input-last-name").attr("placeholder", data['last_name']);
+          $("#input-email").attr("placeholder", data['email']);
+          $("#input-pin-number").attr("placeholder", data['pin_number']);
+          if ('{{ user.is_student }}'){
+            $("#input-phone-number").attr("placeholder", data['phone_number']);
+          }
+        } 
+    }
+
+    function update() {
+      var xhttp = new XMLHttpRequest();
+      var first_name = $('#input-first-name').val();
+      var last_name = $("#input-last-name").val();
+      var email = $("#input-email").val();
+      var pin_number = $("#input-pin-number").val();
+      var phone_number = 0
+      if ('{{ user.is_student }}'){
+            phone_number = $("#input-phone-number").val();
+          }
+      var info = {
+          'get':false,
+          'first_name': first_name,
+          'last_name': last_name,
+          'email': email,
+          'pin_number': pin_number,
+          'phone_number': phone_number
+      };
+      $.ajax ({
+          type: 'POST',
+          url: '/user/setting',
+          data: JSON.stringify(info),
+          success: function(data){
+                swal("Your Profile is Updated.", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }            
+        });
+    }
+
+</script>
+{% endblock %}

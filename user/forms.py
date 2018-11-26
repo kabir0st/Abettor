@@ -12,16 +12,16 @@ class UserForm(UserCreationForm,ModelForm):
 
     class Meta(UserCreationForm):
         model = CustomUser
-        fields = ['first_name','last_name','email','username']
+        fields = ['first_name','last_name','email','username','pin_number']
 
 
 class StudentForm(ModelForm):
-    current_semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
+    semester = forms.ModelChoiceField(queryset = Semester.objects.all(), label = None)
     phone_number = forms.CharField(min_length= 6, max_length=15, required = True)
     
     class Meta:
         model = Student
-        fields = ['current_semester','phone_number']
+        fields = ['semester','phone_number']
 
 
 class LoginForm(forms.Form):
@@ -30,3 +30,4 @@ class LoginForm(forms.Form):
 
     class Meta: 
         fields = ['username','password']
+
