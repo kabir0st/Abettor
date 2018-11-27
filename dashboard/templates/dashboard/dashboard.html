@@ -1,15 +1,46 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
+{% load staticfiles %}
 <input placeholder="Insert UUID" id='uuid'><br>
 <button class="btn btn-warning" onclick="generateQrCode()">Generate Qr Code</button>
-<div id="qr">
-    <img src="{% static 'qr.jpg' %}">
+<div id="qr_box">
+    <img src="{% static 'qr.jpg' %}" alt="Qr image">
 </div>
 <script>
+    $(document).ready(function(){
+    $("#qr_box").hide();
+})
 function generateQrCode(){
     var uuid = $('#uuid').val();
-    console.log(uuid)
+    info = {
+        'uuid':uuid
+    }
+    $.ajax ({
+            type: 'POST',
+            data: JSON.stringify(info),
+            success: function(data){
+                swal("Generated", {
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        $("#qr_box").show();                        
+                    })
+            },
+            error: function(data){
+                swal("An unexpected error occured, Please report to the devs.", {
+                    dangerMode: true,
+                    buttons: {
+                        confirm: true,
+                    },
+                    })
+                    .then(() => {
+                        location.reload();                        
+                    })
+            }            
+        });
 }
 </script>
 
