@@ -69,8 +69,11 @@ def assign_book(request):
     if request.method == 'POST':
         json_str = request.body.decode(encoding = 'UTF-8')
         data = json.loads(json_str)
+        if (data['qr']):
+            user = CustomUser.objects.get(uuid = data['student_uuid'])
+        else:
+            user = CustomUser.objects.get(username = data['username'])
         book = BookInstance.objects.get(uuid= data['uuid'])
-        user = CustomUser.objects.get(username = data['username'])
         student = Student.objects.get(user = user)
         book.assigned_to = student
         book.is_assigned = True
@@ -78,7 +81,7 @@ def assign_book(request):
         book.save()
         response_json = { 
             'book_name': book.book.name,
-            'username': data['username']
+            'username': user.username
         }
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
 

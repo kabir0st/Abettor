@@ -1,5 +1,17 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-this is hero
+<input placeholder="Insert UUID" id='uuid'><br>
+<button class="btn btn-warning" onclick="generateQrCode()">Generate Qr Code</button>
+<div id="qr">
+    <img src="{% static 'qr.jpg' %}">
+</div>
+<script>
+function generateQrCode(){
+    var uuid = $('#uuid').val();
+    console.log(uuid)
+}
+</script>
+
+
 {% endblock %}
