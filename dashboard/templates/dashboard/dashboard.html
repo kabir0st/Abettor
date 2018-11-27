@@ -8,11 +8,7 @@
     <img src="{% static 'qr.jpg' %}" alt="Qr image">
 </div>
 <script>
-    $(document).ready(function(){
-    $("#qr_box").hide();
-})
 function generateQrCode(){
-    var uuid = $('#uuid').val();
     info = {
         'uuid':uuid
     }
@@ -26,7 +22,7 @@ function generateQrCode(){
                     },
                     })
                     .then(() => {
-                        $("#qr_box").show();                        
+                        location.reload();                        
                     })
             },
             error: function(data){
