@@ -47,12 +47,19 @@ c_list = []
 #     '3':[""]
 # }
 # teachers = Teacher.objects.all()
-for s in range(1,8):
-    semester = Semester.objects.get(semester = s)
-    for x in range(2):
-        book = Books.objects.create(name = 'Book '+str(s)+" of " + str(x),semester = semester,author = 'Some One',nou_registered = 3)
-        book.save()
-        for _ in range(int(book.nou_registered)):    
-            book_instance = BookInstance.objects.create(book =  book)
-            book_instance.save()
-        book.reset()
+# for s in range(1,8):
+#     semester = Semester.objects.get(semester = s)
+#     for x in range(2):
+#         book = Books.objects.create(name = 'Book '+str(s)+" of " + str(x),semester = semester,author = 'Some One',nou_registered = 3)
+#         book.save()
+#         for _ in range(int(book.nou_registered)):    
+#             book_instance = BookInstance.objects.create(book =  book)
+#             book_instance.save()
+#         book.reset()
+#passw0rd23
+users = CustomUser.objects.all()
+# pbkdf2_sha256$120000$nkT8BwmyBvJw$5RrSm00akXJz70JBXUf5aHOVc39hPZFMdAonV9dMrJg=
+for user in users:
+    user.password = 'pbkdf2_sha256$120000$nkT8BwmyBvJw$5RrSm00akXJz70JBXUf5aHOVc39hPZFMdAonV9dMrJg='
+    user.save()
+
