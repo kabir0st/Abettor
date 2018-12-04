@@ -15,15 +15,6 @@
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#about">About</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#portfolio">Projects</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-              </li>
               {% if user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link js-scroll-trigger" href="/dashboard">Dashbord</a>
@@ -57,81 +48,22 @@
             </div>
             <div class="col-lg-4">
               <p class="text-faded mb-5">Entrance open for Bsc. Computer Science and Information Technology</p>
-              <a class="btn btn-primary btn-l js-scroll-trigger" href="#about">More Info</a>
+              <a class="btn btn-primary btn-l js-scroll-trigger" href="#register">More Info</a>
             </div>
           </div>
       </div>
       </header>
-  
-      <section class="bg-primary" id="about">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-              <h2 class="section-heading text-white">We've got what you need!</h2>
-              <hr class="light my-4">
-              <p class="text-faded mb-4">From A Full Stacked Website To A Computer Based Application We Got It All</p>
-              <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section id="services">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <h2 class="section-heading">At Your Service</h2>
-              <hr class="my-4">
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 text-center">
-              <div class="service-box mt-5 mx-auto">
-                <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
-                <h3 class="mb-3">Commercial Website</h3>
-                <p class="text-muted mb-0">Everything your company needs to make a strong online presence.</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-              <div class="service-box mt-5 mx-auto">
-                <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
-                <h3 class="mb-3">Ready to Ship</h3>
-                <p class="text-muted mb-0">We can deliver your project far within your deadlines.</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-              <div class="service-box mt-5 mx-auto">
-                <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
-                <h3 class="mb-3">Up to Date</h3>
-                <p class="text-muted mb-0">We always use the lastest technology so that your project doesn't fall behind.</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-              <div class="service-box mt-5 mx-auto">
-                <i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
-                <h3 class="mb-3">Made with Love</h3>
-                <p class="text-muted mb-0">All of the projets are made with dedication and love, for your satifaction as well as ours.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="p-0" id="portfolio">
-        <div class="container-fluid p-0">
-          <div class="row no-gutters popup-gallery">
+
+       <section class="p-10" id="portfolio">
+        <div class="container p-0">
+          <div class="row no-gutters popup-gallery" >
             <div class="col-lg-4 col-sm-6">
-              <a class="portfolio-box" href="{% static 'img/portfolio/fullsize/1.jpg' %}">
-                <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/1.jpg' %}" alt="">
+              <a class="portfolio-box" href="{% static 'img/portfolio/fullsize/8.jpg' %}">
+                <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/8.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                    </div>
                     <div class="project-name">
-                      Project Name
+                      Students
                     </div>
                   </div>
                 </div>
@@ -142,12 +74,8 @@
                 <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/2.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                      {% load staticfiles %}
-                    </div>
                     <div class="project-name">
-                      Project Name
+                      Computer Forensics Lab
                     </div>
                   </div>
                 </div>
@@ -158,11 +86,9 @@
                 <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/3.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                    </div>
+                    
                     <div class="project-name">
-                      Project Name
+                      ECA Activities
                     </div>
                   </div>
                 </div>
@@ -173,11 +99,9 @@
                 <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/4.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                    </div>
+                    
                     <div class="project-name">
-                      Project Name
+                      Environment
                     </div>
                   </div>
                 </div>
@@ -188,11 +112,9 @@
                 <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/5.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                    </div>
+                    
                     <div class="project-name">
-                      Project Name
+                      Events
                     </div>
                   </div>
                 </div>
@@ -203,11 +125,9 @@
                 <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/6.jpg' %}" alt="">
                 <div class="portfolio-box-caption">
                   <div class="portfolio-box-caption-content">
-                    <div class="project-category text-faded">
-                      Category
-                    </div>
+                    
                     <div class="project-name">
-                      Project Name
+                      Help and Services
                     </div>
                   </div>
                 </div>
@@ -217,34 +137,42 @@
         </div>
       </section>
   
-      <section class="bg-dark text-white">
-        <div class="container text-center">
-          <h2 class="mb-4">Start Studying With Us</h2>
-          <a class="btn btn-light btn-xl sr-button" href="#">Get admission.</a>
-        </div>
-      </section>
-  
-      <section id="contact">
+     <section class="bg-primary" id="register">
         <div class="container">
           <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-              <h2 class="section-heading">Let's Get In Touch!</h2>
-              <hr class="my-4">
-              <p class="mb-5">For more information and help, please contact us on the following details:</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-4 ml-auto text-center">
-              <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
-              <p>061-5-----</p>
-            </div>
-            <div class="col-lg-4 mr-auto text-center">
-              <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-              <p>
-                <a href="mailto:your-email@your-domain.com">mountannapurna@gmail.com(lul)</a>
-              </p>
+              <h2 class="section-heading text-white"><strong>Register Now!</strong></h2>
+              <hr class="light my-4">
+              <p class="text-faded mb-4">Your journey to one of the finest IT colleges in Nepal starts here</p>
+              <a class="btn btn-light btn-xl js-scroll-trigger" href="https://goo.gl/forms/7daDUlAlB02WlVZV2" target="blank">Register</a>
             </div>
           </div>
         </div>
       </section>
+  
+      <section id="about">
+        <div>
+          <div class="row">
+            <div class="col-lg-3 mx-auto text-left">
+              <h2 class="section-heading">Let's Get In Touch!</h2>
+              <hr align="left">
+              <p class="mb-5">For more information and help, please contact us on the following details:<br><br>
+                  <strong>P.O. Box :</strong> 443. Phoolbari, Pokhara-11, Nepal<br>
+                  <strong>Tel :</strong> 061-532636, 522650, 9804168887<br>
+                  <strong>Fax :</strong>061- 532636<br>
+                  <strong>Website :</strong> www.macpokhara.edu.np<br>
+                  <strong>E-mail :</strong> info@macpokhara.edu.np<br>
+                  macpokhara@gmail.com</p>
+            </div>
+            <div class="col-lg-6"><div class="mapouter"><div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=mount%20annapurna%20campus&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.pureblack.de/webdesign-hannover/"></a></div><style>.mapouter{text-align:right;height:400px;width:500px;}.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:500px;}</style></div></div>
+          </div>
+        </div>
+      </section>
+
+        <div class="bg-dark">
+          <div class="row">
+              <p class="mb-5">For more information and help, please contact us on the following details:<br><br>
+                  <strong>P.O. Box :</strong> 443. Phoolbari, Pokhara-11, Nepal<br>
+          </div>        
+        </div>
 {% endblock %}  
