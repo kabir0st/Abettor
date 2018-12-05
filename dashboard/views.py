@@ -24,10 +24,12 @@ def dashboard(request):
         qr.make(fit=True)
         img = qr.make_image()
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        x = (os.path.join(BASE_DIR, 'dashboard\static\qr.jpg'))
+        print(BASE_DIR)
+        img.show()
+        x = (os.path.join(BASE_DIR, 'dashboard/static/qr.jpg'))
+        print(x)
         img.save(x)
         response_json = {'good':True}
         return HttpResponse(json.dumps(response_json),content_type = 'application/json')
-
     else:
         return render(request, 'dashboard/dashboard.html')

@@ -9,7 +9,8 @@ qr = qrcode.QRCode(
 )
 
 # The data that you want to store
-data = "The Data that you need to store in the QR Code"
+# data = input('Enter UUID :')
+data = "52dfdae6bf78471d84314c3eee8a4a84"
 
 # Add data
 qr.add_data(data)

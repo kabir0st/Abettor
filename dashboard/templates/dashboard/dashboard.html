@@ -10,7 +10,7 @@
 <script>
 function generateQrCode(){
     info = {
-        'uuid':uuid
+        'uuid':$('#uuid').val()
     }
     $.ajax ({
             type: 'POST',
