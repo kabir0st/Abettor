@@ -36,24 +36,3 @@
       }
     }
   }
-  &:hover {
-    .portfolio-box-caption {
-      opacity: 1;
-    }
-  }
-  &:focus {
-    outline: none;
-  }
-  @media (min-width: 768px) {
-    .portfolio-box-caption {
-      .portfolio-box-caption-content {
-        .project-category {
-          font-size: 16px;
-        }
-        .project-name {
-          font-size: 22px;
-        }
-      }
-    }
-  }
-}
