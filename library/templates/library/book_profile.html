@@ -3,6 +3,8 @@
 {% block content %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'login/js/jsqrscanner.nocache.js' %}"></script>
+<script src="{% static 'jsfiles/library.js' %}"></script>
+<link href="{% static 'cssfiles/library.css' %}" rel="stylesheet">
 
               
 <div class="container">   
@@ -61,7 +63,7 @@
                     <th><input class="form-control" type="text" placeholder="Last Name" id ="last_name"></th>
                 </tr>
                 <tr>
-                    <th><button class="btn btn-danger" onclick="search_student()">Search Student</button></th>
+                    <th><button class="btn btn-danger" onclick="search_student_redirect()">Search Student</button></th>
                     <th><button class="btn btn-danger" onclick="opencamera()">Scan Qr Code</button></th>
                 </tr>
                     {% endif %}
@@ -69,12 +71,11 @@
                     </table>
                     </div>
         </div>
-    </div>
-
-
-
-<div class="container">
     
+
+
+
+<div class="container">       
 <div id="search_table" class="table-responsive">
         <hr>
     <div class="card shadow">
@@ -96,303 +97,75 @@
 </div>
 
 
-
 <script>
 $(document).ready(function(){
     $("#search_table").hide();
 })
+var modal = document.getElementById('myModal');
+var scanned_output = document.getElementById('scanned_output');
 
-function search_student(){
-        var xhttp = new XMLHttpRequest();
-        var first_name = $('#first_name').val();
-        var last_name = $('#last_name').val();
-        var info = {
-            'first_name': first_name,
-            'last_name': last_name,
-        };
-        $.ajax ({
-            type: 'POST',
-            url: '/payment/search',
-            data: JSON.stringify(info),
-            success: function(data){
-                outputData(data);
-            }
-        });
-    }
+var span = document.getElementsByClassName("close")[0];
 
+var span2 = document.getElementsByClassName("cross")[0];
+span2.onclick = function() { 
+    scanned_output.style.display = "none";
+}
 
-    function outputData(data){        
-        $("tr").remove(".table-row");
-        y = data['username'].length;
-        while (y) {
-            y = y -1;
-            $("#results").append(
-                    '<tr class="table-row" data-href="'+data['username'][y]+'"><td>'+data['name'][y]+'</td><td>'+data['semester'][y]+'</td><td>'+data['username'][y]+'</td></tr>'
-            )
-        }
-        $(".table-row").click(function() {
-        var x = $(this).data("href");
-        assign(x);
-        });
-        $("#search_table").show();
-    }
-    
-    function assign(username){ 
-        uuid = '{{ uuid }}'
-        info = {
-            'qr':false,
-            'username':username,
-            'uuid':uuid,
-            }
-        $.ajax ({
-            type: 'POST',
-            url: '/library/book/assign',
-            data: JSON.stringify(info),
-            success: function(data){
-                swal("Book Assigned To The Selected User of username: "+data['username']+" ! ", {
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            },
-            error: function(data){
-                swal("An unexpected error occured, Please report to the devs.", {
-                    dangerMode: true,
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            }            
-        });
-        }
-
+function search_student_redirect(){
+    uuid = '{{ uuid }}'
+    search_student(uuid)
+}
     function mark_returned() {
         info = {
             'username': '{{ username }}',
             'uuid': '{{ uuid }}',
+            'action': 'return'
         }
-        $.ajax ({
-            type: 'POST',
-            url: '/library/book/return',
-            data: JSON.stringify(info),
-            success: function(data){
-                swal("This Book is marked as returned.", {
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            },
-            error: function(data){
-                swal("An unexpected error occured, Please report to the devs.", {
-                    dangerMode: true,
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            }   
-    })
+        send_data(info)
     }
      
     function extend_due_date() {
         info = {
             'username': '{{ username }}',
             'uuid': '{{ uuid }}',
+            'action': 'extend',
         }
-        $.ajax ({
-            type: 'POST',
-            url: '/library/book/extend',
-            data: JSON.stringify(info),
-            success: function(data){
-                swal("Due Date Exteneded By 2 Weeks", {
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            },
-            error: function(data){
-                swal("An unexpected error occured, Please report to the devs.", {
-                    dangerMode: true,
-                    buttons: {
-                        confirm: true,
-                    },
-                    })
-                    .then(() => {
-                        location.reload();                        
-                    })
-            }   
-    })
+        send_data(info)
     }
-    
-// Get the modal
-var modal = document.getElementById('myModal');
-var scanned_output = document.getElementById('scanned_output');
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-var span2 = document.getElementsByClassName("cross")[0];
 
-    
-// When the user clicks the button, open the modal 
 function opencamera(){
     modal.style.display = "block";
     oncall();
 }
 
-// When the user clicks on <span> (x), close the modal
-                
-//this function will be called when JsQRScanner is ready to use
-
-// function JsQRScannerReady()
-// {
-    //create a new scanner passing to it a callback function that will be invoked when
-    //the scanner succesfully scan a QR code
-         
-// }
-
-function oncall(staus){
-    var jbScanner = new JsQRScanner(onQRCodeScanned);
-    //reduce the size of analyzed image to increase performance on mobile devices
-    jbScanner.setSnapImageMaxSize(300);
-    var scannerParentElement = document.getElementById("scanner");
-    if(scannerParentElement)
-    {
-    //append the jbScanner to an existing DOM element
-        jbScanner.appendTo(scannerParentElement);
-    }   
-    span.onclick = function() {
-        modal.style.display = "none";
-        jbScanner.stopScanning();
-        jbScanner.removeFrom(scannerParentElement);
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            jbScanner.stopScanning();
-            jbScanner.removeFrom(scannerParentElement);
-        }
-        if (event.target == scanned_output){
-            scanned_output.style.display = "none";
-        }
-    }
-    function onQRCodeScanned(scannedText)
-    {
-        jbScanner.stopScanning();
-        jbScanner.removeFrom(scannerParentElement);
-        modal.style.display = "none";
-        processQrCode(scannedText) 
-  
-    }
-}
-span2.onclick = function() { 
-    scanned_output.style.display = "none";
-}
-                  
-function processQrCode(uuid) {
+function processQrCode(uuid){
     scanned_output.style.display = "block";
     book_uuid = '{{ uuid }}'
     info = {
         'qr':true,
         'student_uuid':uuid,
         'uuid':book_uuid,
+        'action':'assign'
         }
-    
-    console.log(info)
-    $.ajax ({
-        type: 'POST',
-        url: '/library/book/assign',
-        data: JSON.stringify(info),
-        success: function(data){
-            swal("Book Assigned To The Selected User of username: "+data['username']+" ! ", {
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })
-        },
-        error: function(data){
-            swal("An unexpected error occured, Please report to the devs.", {
-                dangerMode: true,
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })
-        }            
-    });
+    send_data(info)
 }
+
 </script>
 
 <style>
- .qrscanner video {
-  max-width: 95%;
-  max-height: 75%;
-}
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    /* position: fixed; */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    /* left: 0;
-    top: 0; */
-    /* width: 100%; 
-    height: 100%; */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 36%;
-    justify-content: center;
-
-}
-
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-.flip {
-    -webkit-transform: rotateY( 180deg);
-    -moz-transform: rotateY( 180deg);
-    -o-transform: rotateY( 180deg);
-    transform: rotateY( 180deg);
+    .modal {
+      display: none; /* Hidden by default */
+      /* position: fixed; */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      /* left: 0;
+      top: 0; */
+      /* width: 100%; 
+      height: 100%; */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
 </style>
 {% endblock %}
