@@ -37,12 +37,10 @@ def search(request):
 
 		response_json = {'username':[], 'name': [], 'semester':[] }
 		for user in users:
-			print(user)
 			student = Student.objects.get(user = user)
 			response_json['username'].append(user.username)
 			response_json['name'].append(user.first_name + " " + user.last_name)
 			response_json['semester'].append(str(student.semester))
-		print(response_json)
 		return HttpResponse(json.dumps(response_json),content_type = 'application/json')
 	else:
 		return HttpResponseRedirect('/')
@@ -85,9 +83,9 @@ def pay(request,username):
 		json_obj = json.loads(json_str)
 		username = json_obj['username']
 		amount = json_obj['amount']
-		if (pay_db(username,amount)):
-			return HttpResponseRedirect('/payment/'+username)
-			#need to add an error page
+		pay_db(username,amount)
+		return HttpResponseRedirect('/payment/'+username)
+
 	else:
 		return HttpResponseRedirect('/')
 
@@ -138,6 +136,7 @@ def verify_khalti(request):
 		}
 		response = requests.post(url, payload, headers = headers)
 		if (str(response) == '<Response [200]>'):
+			amount = amount/100
 			pay_db(username,amount)
 			report['status'] = True
 			report['description'] = 'Payment is sucessful'
@@ -148,7 +147,6 @@ def verify_khalti(request):
 
 def pay_db(username,amount):
 	try:
-		amount = amount / 100
 		user = CustomUser.objects.get(username = username)
 		x = Student.objects.get(user = user)
 		feetable = FeeTable.objects.get(student = x)
