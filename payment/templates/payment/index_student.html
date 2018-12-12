@@ -3,6 +3,8 @@
 {% block content %}
 {% load staticfiles %}
 <script src="https://khalti.com/static/khalti-checkout.js"></script>
+<link href="{% static 'payment/css/index_student.css' %}" rel="stylesheet">
+
 
 <div class="mid" id='loading'>
         <div class="loader">
@@ -44,132 +46,15 @@
         </div>
     </div>
 </div>
-</div>
-<style>
-    .table-row{
-    cursor:pointer;
-    }
-    .main-content {
-    margin-top: 5%;
-    }
-</style>
-          
+</div>      
 <script>   
-          $(document).ready(function(){
-        $("#loading").hide();
-        $("#maincont").show();
-    })
-
-var config = {
-            // replace the publicKey with yours
-            "publicKey": "test_public_key_7a2733a89fe04e07851792127b4e7daf",
-            "productIdentity": '{{ uuid }}',
-            "productName": "{{ username }}",
-            "productUrl": window.location.href,
-            "eventHandler": {
-                onSuccess (payload) {
-                    verify(payload);
-                },
-                onError (error) {
-                    console.log(error);
-                },
-                onClose () {
-                    console.log('widget is closing');
-                }
-            }
-        };
-        var checkout = new KhaltiCheckout(config);
-        var btn = document.getElementById("payment-button");
-        btn.onclick = function () {
-            amount  = $('#amount').val() * 100;
-            if (amount>0){
-                checkout.show({amount: amount});
-            }
-            else{
-                swal("An unexpected error occured, Check if the entered amount is correct.", {
-                dangerMode: true,
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })
-            }
-        };
-
-
-function verify(payload){
-    $("#maincont").hide();
-    $("#loading").show();
-    $.ajax ({
-        type: 'POST',
-        url: '/payment/khalti/verify',
-        data: JSON.stringify(payload),
-        success: function(data){
-            if(data['status']){
-                swal("Payment successful. Thank you for using our service.", {
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })    
-            }else{
-                swal("Payment unsuccessful. Please try again or contact customer service.", {
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })
-            }
-            },
-        error: function(data){
-            swal("An unexpected error occured, Please report to the devs.", {
-                dangerMode: true,
-                buttons: {
-                    confirm: true,
-                },
-                })
-                .then(() => {
-                    location.reload();                        
-                })
-        },
-        complete: function(){
-            $("#loading").hide();
-            $("#maincont").show();
-        }            
-    });
-}
-    
+$(document).ready(function(){
+    $("#loading").hide();
+    $("#maincont").show();
+})
+var UUID = '{{ uuid }}'
+var USERNAME = '{{ username }}'    
 </script>
 
-<style>
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-bottom: 16px solid blue;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-.mid {
-    height: 200px;
-    width: 400px;
-
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -200px;
-}</style>
+<script type="text/javascript" src="{% static 'payment/js/index_student.js' %}"></script>
 {% endblock %}
