@@ -1,0 +1,49 @@
+.table-row{
+    cursor:pointer;
+    }
+    .main-content {
+    margin-top: 3%;
+    }
+    .swal-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    }
+
+.qrscanner video {
+    max-width: 95%;
+    max-height: 75%;
+  }
+  /* The Modal (background) */
+  
+  
+  /* Modal Content */
+  .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 36%;
+      justify-content: center;
+  
+  }
+  
+  /* The Close Button */
+  .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  .flip {
+      -webkit-transform: rotateY( 180deg);
+      -moz-transform: rotateY( 180deg);
+      -o-transform: rotateY( 180deg);
+      transform: rotateY( 180deg);
+    }
+  
