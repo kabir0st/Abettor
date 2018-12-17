@@ -96,16 +96,7 @@
                   <i class="ni ni-money-coins text-green"></i> Exam Results
                 </a>
               </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ni ni-bullet-list-67 text-red"></i> My Performance
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ni ni-key-25 text-info"></i> Notice Board
-            </a>
-          </li>
+          
           {% if user.is_student == True %}
           <li class="nav-item">
             <a class="nav-link" href="#">
@@ -113,12 +104,6 @@
             </a>
           </li>
           {% endif %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="./examples/profile.html">
-              <i class="ni ni-single-02 text-blue"></i> My profile
-            </a>
-          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/user/setting">
@@ -170,7 +155,7 @@
   <!-- Argon Scripts -->
   <!-- Core -->
   <!-- <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script> -->
-  <!-- <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script> -->
+  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <!-- Optional JS -->
   <script src="{% static 'assets/vendor/chart.js/dist/Chart.min.js' %}"></script>
   <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
