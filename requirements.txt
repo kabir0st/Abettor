@@ -4,3 +4,5 @@ qrcode[pil]
 pillow
 gunicorn==19.7.1
 whitenoise
+requests
+uuid
