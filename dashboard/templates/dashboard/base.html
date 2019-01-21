@@ -79,11 +79,13 @@
               <i class="fa fa-book-reader text-red"></i> Library
             </a>
           </li>
+          {% if user.is_accountant == True or user.is_student == True %}
           <li class="nav-item">
             <a class="nav-link" href="/payment/">
               <i class="ni ni-money-coins text-green"></i> Billing
             </a>
           </li>
+          {% endif %}
           {% if user.is_accountant == True %}
           <li class="nav-item">
               <a class="nav-link" href="/user/new">
@@ -114,24 +116,14 @@
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">Follow The Devs</h6>
+        <h6 class="navbar-heading text-muted">Source Code And Bug Report</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-              <a class="nav-link" href="https://github.com/lurayy" target="_blank">
+              <a class="nav-link" href="https://github.com/lurayy/Abettor" target="_blank">
                 <i class="fab fa-github-square"></i> GitHub
               </a>
             </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.facebook.com/lurayy.newar" target="_blank">
-              <i class="fab fa-facebook text-blue"></i> Facebook
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.youtube.com/channel/UCmpeYVSr7HrGN5MUev_a2yA" target="_blank">
-              <i class="fab fa-youtube text-red"></i> YouTube
-            </a>
-          </li>
           <hr>
 
           <li class="nav-item">
