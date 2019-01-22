@@ -2,7 +2,6 @@
 #### College project for Software Engineering, 6th semester, BSc. CSIT
  Abettor is a web application that helps in efficient information flow between different working bodies of the college administration and students creating a information ecosystem for efficient governing of the college.This system helps with the daily routine of college management and reduces the paperwork to minimum, saving time and making data easily accessible.
 
-#### Note: Still in developement
 #### Live : https://abettor-college-project.herokuapp.com/
 
 # Login Credintials 
@@ -28,3 +27,4 @@ Scan these qr code and for login use pin 666
 5.Book1
 ![book1](https://github.com/lurayy/Abettor/blob/master/book1.jpg)
 
+#### Note: Still in developement
