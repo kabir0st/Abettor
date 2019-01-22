@@ -4,7 +4,7 @@
 
 #### Live : https://abettor-college-project.herokuapp.com/
 
-# Login Credintials 
+# Login Credentials 
 ### Usernames : account1, library, student0, teacher0
 ### Password  : passw0rd23
 
