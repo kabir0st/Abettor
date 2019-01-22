@@ -26,5 +26,6 @@ Scan these qr code and for login use pin 666
 
 5.Book1
 ![book1](https://github.com/lurayy/Abettor/blob/master/book1.jpg)
+![book1](https://github.com/lurayy/Abettor/blob/master/book1.jpg)
 
 #### Note: Still in developement
