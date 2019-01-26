@@ -38,11 +38,6 @@ class Books(models.Model):
         return True
 
 
-
-
-
-
-
 class BookInstance(models.Model):
     book = models.ForeignKey(Books,on_delete = models.CASCADE)
     #uuid will be used for qr code sys 

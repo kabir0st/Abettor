@@ -1,4 +1,5 @@
 
+
 function search_student(uuid){
     var first_name = $('#first_name').val();
     var last_name = $('#last_name').val();

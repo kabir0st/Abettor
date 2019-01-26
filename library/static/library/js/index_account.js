@@ -1,3 +1,6 @@
+
+var span2 = document.getElementsByClassName("cross");
+
 function show_explore_table(){
     location.reload();
 }
@@ -232,4 +235,3 @@ function processQrCode(uuid) {
     scanned_output.style.display = "block";
     window.location = "/library/"+uuid; 
 }
-
