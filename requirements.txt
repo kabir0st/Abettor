@@ -2,7 +2,7 @@ django
 django-bootstrap4
 qrcode[pil]
 pillow
-gunicorn==19.7.1
+gunicorn==22.0.0
 whitenoise
 requests
 uuid
